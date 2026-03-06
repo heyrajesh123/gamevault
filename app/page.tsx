@@ -13,33 +13,28 @@ interface Game {
   badge?: string;
 }
 
-const PROJECT_ID = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "eq6o0luu";
-const DATASET = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
+const PROJECT_ID = "eq6o0luu";
+const DATASET = "production";
 
-async function fetchGames(): Promise<Game[]> {
-  const query = encodeURIComponent(
-    `*[_type == "game"] | order(_createdAt desc) {
-      _id, title, description, genre, rating, websiteLink, featured, badge,
-      "imageUrl": image.asset->url
-    }`
-  );
-  const url = `https://${PROJECT_ID}.api.sanity.io/v2021-10-21/data/query/${DATASET}?query=${query}`;
-  const res = await fetch(url);
-  const data = await res.json();
-  return data.result || [];
-}
-
-function Stars({ rating }: { rating: number }) {
-  return (
-    <div style={{ display: "flex", gap: 2 }}>
-      {[1, 2, 3, 4, 5].map((s) => (
-        <span key={s} style={{ color: s <= rating ? "#FFD700" : "#444", fontSize: 14 }}>★</span>
-      ))}
-    </div>
+function Stars(props: { rating: number }) {
+  const stars = [1, 2, 3, 4, 5];
+  return React.createElement(
+    "div",
+    { style: { display: "flex", gap: 2 } },
+    stars.map((s) =>
+      React.createElement(
+        "span",
+        { key: s, style: { color: s <= props.rating ? "#FFD700" : "#444", fontSize: 14 } },
+        "★"
+      )
+    )
   );
 }
 
-function GameCard({ game }: { game: Game }) {
+import React from "react";
+
+function GameCard(props: { game: Game }) {
+  const game = props.game;
   const [hovered, setHovered] = useState(false);
   const genreColors: Record<string, string> = {
     Action: "#FF4444", RPG: "#9B59B6", Strategy: "#3498DB",
@@ -54,25 +49,29 @@ function GameCard({ game }: { game: Game }) {
       onMouseLeave={() => setHovered(false)}
       style={{
         background: hovered ? "#1a1a2e" : "#111128",
-        border: hovered ? `1px solid ${genreColor}55` : "1px solid #ffffff11",
-        borderRadius: 16, overflow: "hidden",
+        border: hovered ? ("1px solid " + genreColor + "55") : "1px solid #ffffff11",
+        borderRadius: 16,
+        overflow: "hidden",
         transition: "all 0.3s ease",
         transform: hovered ? "translateY(-4px)" : "translateY(0)",
-        boxShadow: hovered ? `0 16px 40px ${genreColor}22` : "0 4px 20px #00000044",
+        boxShadow: hovered ? ("0 16px 40px " + genreColor + "22") : "0 4px 20px #00000044",
         cursor: "pointer",
       }}
     >
       <div style={{
-        width: "100%", aspectRatio: "16/9",
-        background: `linear-gradient(135deg, ${genreColor}33, #0d0d1a)`,
-        position: "relative", display: "flex", alignItems: "center",
-        justifyContent: "center", fontSize: 48,
+        width: "100%",
+        aspectRatio: "16/9" as any,
+        background: "linear-gradient(135deg, " + genreColor + "33, #0d0d1a)",
+        position: "relative",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: 48,
       }}>
-        {game.imageUrl ? (
-          <img src={game.imageUrl} alt={game.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-        ) : (
-          <span>🎮</span>
-        )}
+        {game.imageUrl
+          ? <img src={game.imageUrl} alt={game.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          : <span>🎮</span>
+        }
         {game.badge && (
           <div style={{
             position: "absolute", top: 10, right: 10,
@@ -95,7 +94,7 @@ function GameCard({ game }: { game: Game }) {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
           <h3 style={{ margin: 0, color: "#fff", fontSize: 17, fontWeight: 700, lineHeight: 1.3 }}>{game.title}</h3>
           <span style={{
-            background: `${genreColor}22`, color: genreColor, fontSize: 11,
+            background: genreColor + "22", color: genreColor, fontSize: 11,
             fontWeight: 600, padding: "3px 9px", borderRadius: 8,
             whiteSpace: "nowrap", marginLeft: 8,
           }}>{game.genre}</span>
@@ -103,23 +102,24 @@ function GameCard({ game }: { game: Game }) {
         <Stars rating={game.rating || 0} />
         <p style={{
           color: "#aaa", fontSize: 13, lineHeight: 1.6, margin: "10px 0 16px",
-          display: "-webkit-box", WebkitLineClamp: 2,
-          WebkitBoxOrient: "vertical", overflow: "hidden",
+          overflow: "hidden", display: "-webkit-box",
+          WebkitLineClamp: 2, WebkitBoxOrient: "vertical" as any,
         }}>
           {game.description}
         </p>
-        
-          href={game.websiteLink} target="_blank" rel="noopener noreferrer"
+        <a
+          href={game.websiteLink}
+          target="_blank"
+          rel="noopener noreferrer"
           style={{
             display: "block", textAlign: "center",
             background: hovered ? genreColor : "transparent",
             color: hovered ? "#fff" : genreColor,
-            border: `1.5px solid ${genreColor}`,
+            border: "1.5px solid " + genreColor,
             borderRadius: 10, padding: "10px 0",
             fontWeight: 700, fontSize: 13, textDecoration: "none",
             transition: "all 0.25s ease", letterSpacing: 0.5,
           }}
-          onClick={(e) => e.stopPropagation()}
         >
           Visit Game →
         </a>
@@ -136,23 +136,32 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchGames().then((data) => {
-      setGames(data);
-      setFiltered(data);
-      setLoading(false);
-    }).catch(() => {
-      const demo: Game[] = [
-        { _id: "1", title: "Cyber Legends", description: "Epic futuristic battle royale with stunning visuals and fast-paced gameplay.", genre: "Action", rating: 5, websiteLink: "#", featured: true, badge: "New" },
-        { _id: "2", title: "Dragon Quest Online", description: "Massive open-world RPG with hundreds of quests and deep character customization.", genre: "RPG", rating: 4, websiteLink: "#", badge: "Hot" },
-        { _id: "3", title: "Mind Maze", description: "Brain-twisting puzzles that will challenge your logic and creativity.", genre: "Puzzle", rating: 4, websiteLink: "#" },
-        { _id: "4", title: "Galaxy Conquest", description: "Real-time strategy game where you build empires across the cosmos.", genre: "Strategy", rating: 5, websiteLink: "#", featured: true },
-        { _id: "5", title: "Football Stars", description: "The most realistic football simulation with real physics engine.", genre: "Sports", rating: 4, websiteLink: "#" },
-        { _id: "6", title: "Shadow Realm", description: "Dark atmospheric horror adventure through haunted dimensions.", genre: "Horror", rating: 3, websiteLink: "#", badge: "18+" },
-      ];
-      setGames(demo);
-      setFiltered(demo);
-      setLoading(false);
-    });
+    const query = encodeURIComponent(
+      `*[_type == "game"] | order(_createdAt desc) { _id, title, description, genre, rating, websiteLink, featured, badge, "imageUrl": image.asset->url }`
+    );
+    const url = `https://${PROJECT_ID}.api.sanity.io/v2021-10-21/data/query/${DATASET}?query=${query}`;
+
+    fetch(url)
+      .then((r) => r.json())
+      .then((data) => {
+        const result = data.result || [];
+        setGames(result);
+        setFiltered(result);
+        setLoading(false);
+      })
+      .catch(() => {
+        const demo: Game[] = [
+          { _id: "1", title: "Cyber Legends", description: "Epic futuristic battle royale with stunning visuals and fast-paced gameplay.", genre: "Action", rating: 5, websiteLink: "#", featured: true, badge: "New" },
+          { _id: "2", title: "Dragon Quest Online", description: "Massive open-world RPG with hundreds of quests and deep character customization.", genre: "RPG", rating: 4, websiteLink: "#", badge: "Hot" },
+          { _id: "3", title: "Mind Maze", description: "Brain-twisting puzzles that will challenge your logic and creativity.", genre: "Puzzle", rating: 4, websiteLink: "#" },
+          { _id: "4", title: "Galaxy Conquest", description: "Real-time strategy game where you build empires across the cosmos.", genre: "Strategy", rating: 5, websiteLink: "#", featured: true },
+          { _id: "5", title: "Football Stars", description: "The most realistic football simulation with real physics engine.", genre: "Sports", rating: 4, websiteLink: "#" },
+          { _id: "6", title: "Shadow Realm", description: "Dark atmospheric horror adventure through haunted dimensions.", genre: "Horror", rating: 3, websiteLink: "#", badge: "18+" },
+        ];
+        setGames(demo);
+        setFiltered(demo);
+        setLoading(false);
+      });
   }, []);
 
   const genres = ["All", ...Array.from(new Set(games.map((g) => g.genre)))];
@@ -214,7 +223,9 @@ export default function Home() {
           <div style={{ position: "relative", maxWidth: 480, margin: "0 auto" }}>
             <span style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", fontSize: 18, opacity: 0.5 }}>🔍</span>
             <input
-              type="text" placeholder="Search games..." value={search}
+              type="text"
+              placeholder="Search games..."
+              value={search}
               onChange={(e) => setSearch(e.target.value)}
               style={{
                 width: "100%", boxSizing: "border-box",
@@ -230,15 +241,13 @@ export default function Home() {
       <div style={{ padding: "24px 24px 0", maxWidth: 1200, margin: "0 auto" }}>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
           {genres.map((g) => (
-            <button key={g} onClick={() => setActiveGenre(g)}
-              style={{
-                background: activeGenre === g ? "linear-gradient(135deg, #7C3AED, #3B82F6)" : "#ffffff0d",
-                border: activeGenre === g ? "none" : "1px solid #ffffff15",
-                color: activeGenre === g ? "#fff" : "#aaa",
-                padding: "8px 18px", borderRadius: 30, fontSize: 13,
-                fontWeight: 600, cursor: "pointer", transition: "all 0.2s",
-              }}
-            >{g}</button>
+            <button key={g} onClick={() => setActiveGenre(g)} style={{
+              background: activeGenre === g ? "linear-gradient(135deg, #7C3AED, #3B82F6)" : "#ffffff0d",
+              border: activeGenre === g ? "none" : "1px solid #ffffff15",
+              color: activeGenre === g ? "#fff" : "#aaa",
+              padding: "8px 18px", borderRadius: 30, fontSize: 13,
+              fontWeight: 600, cursor: "pointer", transition: "all 0.2s",
+            }}>{g}</button>
           ))}
         </div>
       </div>
@@ -255,28 +264,28 @@ export default function Home() {
             <p>No games found. Try a different search!</p>
           </div>
         ) : (
-          <>
+          <div>
             {featuredGames.length > 0 && (
-              <section style={{ marginBottom: 48 }}>
+              <div style={{ marginBottom: 48 }}>
                 <h2 style={{ color: "#FFD700", fontSize: 14, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", marginBottom: 20 }}>
                   ⭐ Featured Games
                 </h2>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 20 }}>
                   {featuredGames.map((game) => <GameCard key={game._id} game={game} />)}
                 </div>
-              </section>
+              </div>
             )}
             {regularGames.length > 0 && (
-              <section>
+              <div>
                 <h2 style={{ color: "#aaa", fontSize: 14, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", marginBottom: 20 }}>
                   🎮 All Games ({regularGames.length})
                 </h2>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 20 }}>
                   {regularGames.map((game) => <GameCard key={game._id} game={game} />)}
                 </div>
-              </section>
+              </div>
             )}
-          </>
+          </div>
         )}
       </main>
 
