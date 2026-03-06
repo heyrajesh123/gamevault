@@ -13,6 +13,7 @@ interface Game {
   badge?: string;
   developer?: string;
   ageRating?: string;
+  slug?: string;
 }
 
 const PROJECT_ID = "eq6o0luu";
@@ -40,129 +41,15 @@ function Stars({ rating, size = 14 }: { rating: number; size?: number }) {
   );
 }
 
-function GameDetail({ game, onBack }: { game: Game; onBack: () => void }) {
-  const color = genreColors[game.genre] || "#95A5A6";
-  const icon = genreIcons[game.genre] || "🎮";
-
-  return (
-    <div style={{ minHeight: "100vh", background: "#0a0a15", color: "#fff", fontFamily: "'Segoe UI', system-ui, sans-serif" }}>
-      <div style={{
-        position: "sticky", top: 0, zIndex: 100,
-        background: "#0a0a15ee", backdropFilter: "blur(12px)",
-        borderBottom: "1px solid #ffffff11", padding: "0 20px",
-        display: "flex", alignItems: "center", height: 56,
-      }}>
-        <button onClick={onBack} style={{
-          background: "#ffffff15", border: "none", color: "#fff",
-          borderRadius: 20, padding: "6px 14px", cursor: "pointer",
-          fontSize: 14, fontWeight: 600,
-        }}>← Back</button>
-        <span style={{ marginLeft: 16, fontWeight: 700, fontSize: 16 }}>{game.title}</span>
-      </div>
-
-      <div style={{
-        width: "100%", height: 220,
-        background: game.imageUrl
-          ? "url(" + game.imageUrl + ") center/cover"
-          : "linear-gradient(135deg, " + color + "44, #0d0d1a)",
-        position: "relative", display: "flex", alignItems: "center", justifyContent: "center",
-      }}>
-        {!game.imageUrl && <span style={{ fontSize: 80 }}>{icon}</span>}
-        <div style={{
-          position: "absolute", bottom: 0, left: 0, right: 0, height: 80,
-          background: "linear-gradient(transparent, #0a0a15)",
-        }} />
-        {game.badge && (
-          <div style={{
-            position: "absolute", top: 14, right: 14,
-            background: color, color: "#fff", fontSize: 11,
-            fontWeight: 700, padding: "4px 12px", borderRadius: 20, textTransform: "uppercase",
-          }}>{game.badge}</div>
-        )}
-      </div>
-
-      <div style={{ padding: "0 20px 40px", maxWidth: 600, margin: "0 auto" }}>
-        <div style={{ display: "flex", alignItems: "flex-start", gap: 16, marginTop: 16, marginBottom: 20 }}>
-          <div style={{
-            width: 72, height: 72, borderRadius: 18, flexShrink: 0,
-            background: "linear-gradient(135deg, " + color + ", " + color + "88)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: 34, border: "2px solid #ffffff15",
-          }}>{icon}</div>
-          <div style={{ flex: 1 }}>
-            <h1 style={{ margin: "0 0 4px", fontSize: 22, fontWeight: 800, lineHeight: 1.2 }}>{game.title}</h1>
-            <div style={{ color: color, fontSize: 13, fontWeight: 600, marginBottom: 6 }}>
-              {game.developer || "Independent Developer"}
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <Stars rating={game.rating} size={13} />
-              <span style={{ color: "#666", fontSize: 12 }}>{game.rating}.0</span>
-            </div>
-          </div>
-        </div>
-
-        <a href={game.websiteLink} target="_blank" rel="noopener noreferrer" style={{
-          display: "block", textAlign: "center", textDecoration: "none",
-          background: "linear-gradient(135deg, " + color + ", " + color + "bb)",
-          color: "#fff", fontWeight: 800, fontSize: 16,
-          padding: "16px", borderRadius: 14, marginBottom: 24,
-          boxShadow: "0 8px 24px " + color + "44", letterSpacing: 0.5,
-        }}>
-          🎮 Play Now
-        </a>
-
-        <div style={{
-          display: "grid", gridTemplateColumns: "1fr 1fr 1fr",
-          background: "#111128", borderRadius: 16, overflow: "hidden",
-          border: "1px solid #ffffff0d", marginBottom: 24,
-        }}>
-          {[
-            { label: "Genre", value: game.genre },
-            { label: "Rating", value: game.rating + "/5 ⭐" },
-            { label: "Age", value: game.ageRating || "All Ages" },
-          ].map((stat, i) => (
-            <div key={i} style={{
-              padding: "16px 12px", textAlign: "center",
-              borderRight: i < 2 ? "1px solid #ffffff0d" : "none",
-            }}>
-              <div style={{ color: "#fff", fontWeight: 700, fontSize: 14, marginBottom: 4 }}>{stat.value}</div>
-              <div style={{ color: "#555", fontSize: 11, textTransform: "uppercase", letterSpacing: 0.5 }}>{stat.label}</div>
-            </div>
-          ))}
-        </div>
-
-        <div style={{ background: "#111128", borderRadius: 16, padding: 20, border: "1px solid #ffffff0d", marginBottom: 20 }}>
-          <h3 style={{ margin: "0 0 12px", fontSize: 15, fontWeight: 700, color: "#aaa", textTransform: "uppercase", letterSpacing: 1 }}>About</h3>
-          <p style={{ margin: 0, color: "#ccc", fontSize: 15, lineHeight: 1.7 }}>{game.description}</p>
-        </div>
-
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-          <span style={{
-            background: color + "22", color: color,
-            padding: "8px 16px", borderRadius: 20, fontSize: 13, fontWeight: 600,
-            border: "1px solid " + color + "44",
-          }}>{icon} {game.genre}</span>
-          {game.featured && (
-            <span style={{
-              background: "#FFD70022", color: "#FFD700",
-              padding: "8px 16px", borderRadius: 20, fontSize: 13, fontWeight: 600,
-              border: "1px solid #FFD70044",
-            }}>⭐ Featured</span>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function GameCard({ game, onClick }: { game: Game; onClick: () => void }) {
+function GameCard({ game }: { game: Game }) {
   const [pressed, setPressed] = useState(false);
   const color = genreColors[game.genre] || "#95A5A6";
   const icon = genreIcons[game.genre] || "🎮";
+  const href = game.slug ? "/" + game.slug : "#";
 
   return (
-    <div
-      onClick={onClick}
+    <a
+      href={href}
       onMouseDown={() => setPressed(true)}
       onMouseUp={() => setPressed(false)}
       onMouseLeave={() => setPressed(false)}
@@ -172,6 +59,7 @@ function GameCard({ game, onClick }: { game: Game; onClick: () => void }) {
         background: pressed ? "#ffffff08" : "transparent",
         borderBottom: "1px solid #ffffff08",
         transition: "background 0.15s",
+        textDecoration: "none", color: "inherit",
       }}
     >
       <div style={{
@@ -201,19 +89,21 @@ function GameCard({ game, onClick }: { game: Game; onClick: () => void }) {
         <Stars rating={game.rating} size={11} />
       </div>
       <div style={{ color: "#333", fontSize: 22, flexShrink: 0 }}>›</div>
-    </div>
+    </a>
   );
 }
 
-function FeaturedCard({ game, onClick }: { game: Game; onClick: () => void }) {
+function FeaturedCard({ game }: { game: Game }) {
   const color = genreColors[game.genre] || "#95A5A6";
   const icon = genreIcons[game.genre] || "🎮";
+  const href = game.slug ? "/" + game.slug : "#";
 
   return (
-    <div onClick={onClick} style={{
+    <a href={href} style={{
       minWidth: 200, width: 200, borderRadius: 18, overflow: "hidden",
       background: "#111128", border: "1px solid #ffffff0d",
-      cursor: "pointer", flexShrink: 0,
+      cursor: "pointer", flexShrink: 0, textDecoration: "none",
+      color: "inherit", display: "block",
     }}>
       <div style={{
         height: 110,
@@ -225,7 +115,7 @@ function FeaturedCard({ game, onClick }: { game: Game; onClick: () => void }) {
         {!game.imageUrl && icon}
       </div>
       <div style={{ padding: "12px 14px" }}>
-        <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 4, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{game.title}</div>
+        <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 4, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", color: "#fff" }}>{game.title}</div>
         <div style={{ color: "#666", fontSize: 11, marginBottom: 8 }}>{game.genre}</div>
         <div style={{
           background: color + "22", color: color, textAlign: "center",
@@ -233,17 +123,17 @@ function FeaturedCard({ game, onClick }: { game: Game; onClick: () => void }) {
           border: "1px solid " + color + "33",
         }}>Play Now</div>
       </div>
-    </div>
+    </a>
   );
 }
 
 const demoGames: Game[] = [
-  { _id: "1", title: "Cyber Legends", description: "Epic futuristic battle royale with stunning visuals and fast-paced gameplay. Battle against players worldwide in neon-lit arenas.", genre: "Action", rating: 5, websiteLink: "#", featured: true, badge: "New", developer: "NeonSoft Studios", ageRating: "13+" },
-  { _id: "2", title: "Dragon Quest Online", description: "Massive open-world RPG with hundreds of quests and deep character customization. Explore vast lands and defeat ancient dragons.", genre: "RPG", rating: 4, websiteLink: "#", badge: "Hot", developer: "FantasyForge", ageRating: "All Ages" },
-  { _id: "3", title: "Mind Maze", description: "Brain-twisting puzzles that will challenge your logic and creativity. Over 500 levels of mind-bending fun.", genre: "Puzzle", rating: 4, websiteLink: "#", developer: "BrainWave Games", ageRating: "All Ages" },
-  { _id: "4", title: "Galaxy Conquest", description: "Real-time strategy game where you build empires across the cosmos. Manage resources, build fleets and conquer the universe.", genre: "Strategy", rating: 5, websiteLink: "#", featured: true, developer: "StarForge Labs", ageRating: "All Ages" },
-  { _id: "5", title: "Football Stars", description: "The most realistic football simulation with real physics engine. Play with your favorite teams and compete in online leagues.", genre: "Sports", rating: 4, websiteLink: "#", developer: "KickOff Games", ageRating: "All Ages" },
-  { _id: "6", title: "Shadow Realm", description: "Dark atmospheric horror adventure through haunted dimensions. Face your deepest fears in this spine-chilling experience.", genre: "Horror", rating: 3, websiteLink: "#", badge: "18+", developer: "DarkPixel", ageRating: "18+" },
+  { _id: "1", title: "Cyber Legends", description: "Epic futuristic battle royale with stunning visuals.", genre: "Action", rating: 5, websiteLink: "#", featured: true, badge: "New", developer: "NeonSoft Studios", ageRating: "13+", slug: "cyber-legends" },
+  { _id: "2", title: "Dragon Quest Online", description: "Massive open-world RPG with hundreds of quests.", genre: "RPG", rating: 4, websiteLink: "#", badge: "Hot", developer: "FantasyForge", ageRating: "All Ages", slug: "dragon-quest-online" },
+  { _id: "3", title: "Mind Maze", description: "Brain-twisting puzzles that challenge your logic.", genre: "Puzzle", rating: 4, websiteLink: "#", developer: "BrainWave Games", ageRating: "All Ages", slug: "mind-maze" },
+  { _id: "4", title: "Galaxy Conquest", description: "Real-time strategy across the cosmos.", genre: "Strategy", rating: 5, websiteLink: "#", featured: true, developer: "StarForge Labs", ageRating: "All Ages", slug: "galaxy-conquest" },
+  { _id: "5", title: "Football Stars", description: "The most realistic football simulation.", genre: "Sports", rating: 4, websiteLink: "#", developer: "KickOff Games", ageRating: "All Ages", slug: "football-stars" },
+  { _id: "6", title: "Shadow Realm", description: "Dark atmospheric horror adventure.", genre: "Horror", rating: 3, websiteLink: "#", badge: "18+", developer: "DarkPixel", ageRating: "18+", slug: "shadow-realm" },
 ];
 
 export default function Home() {
@@ -252,11 +142,10 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const [activeGenre, setActiveGenre] = useState("All");
   const [loading, setLoading] = useState(true);
-  const [selectedGame, setSelectedGame] = useState<Game | null>(null);
 
   useEffect(() => {
     const query = encodeURIComponent(
-      `*[_type == "game"] | order(_createdAt desc) { _id, title, description, genre, rating, websiteLink, featured, badge, developer, ageRating, "imageUrl": image.asset->url }`
+      `*[_type == "game"] | order(_createdAt desc) { _id, title, description, genre, rating, websiteLink, featured, badge, developer, ageRating, "imageUrl": image.asset->url, "slug": slug.current }`
     );
     fetch("https://" + PROJECT_ID + ".api.sanity.io/v2021-10-21/data/query/" + DATASET + "?query=" + query)
       .then((r) => r.json())
@@ -286,12 +175,10 @@ export default function Home() {
   const genres = ["All", ...Array.from(new Set(games.map((g) => g.genre)))];
   const featuredGames = games.filter((g) => g.featured);
 
-  if (selectedGame) {
-    return <GameDetail game={selectedGame} onBack={() => setSelectedGame(null)} />;
-  }
-
   return (
     <div style={{ minHeight: "100vh", background: "#0a0a15", color: "#fff", fontFamily: "'Segoe UI', system-ui, sans-serif" }}>
+
+      {/* Navbar */}
       <div style={{
         position: "sticky", top: 0, zIndex: 100,
         background: "#0a0a15f0", backdropFilter: "blur(12px)",
@@ -333,7 +220,7 @@ export default function Home() {
               </div>
               <div style={{ display: "flex", gap: 14, padding: "0 20px 4px", overflowX: "auto", scrollbarWidth: "none" }}>
                 {featuredGames.map((game) => (
-                  <FeaturedCard key={game._id} game={game} onClick={() => setSelectedGame(game)} />
+                  <FeaturedCard key={game._id} game={game} />
                 ))}
               </div>
             </div>
@@ -366,7 +253,7 @@ export default function Home() {
                 </div>
               ) : (
                 filtered.map((game) => (
-                  <GameCard key={game._id} game={game} onClick={() => setSelectedGame(game)} />
+                  <GameCard key={game._id} game={game} />
                 ))
               )}
             </div>
