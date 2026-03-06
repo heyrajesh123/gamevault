@@ -2,11 +2,11 @@ import { Metadata } from "next";
 import TabSection from "./TabSection";
 
 export const metadata: Metadata = {
-  title: "Yono Games – Download Best Rummy & Slots Apps",
-  description: "Download the best Yono Rummy, Slots and Casino apps. Get sign-up bonus, refer & earn rewards. Find top rated, new and other Yono games.",
+  title: "Nova Games – Download Best Rummy & Slots Apps",
+  description: "Download the best Nova Rummy, Slots and Casino apps. Get sign-up bonus, refer & earn rewards. Find top rated, new and other Nova games.",
   openGraph: {
-    title: "Yono Games – Download Best Rummy & Slots Apps",
-    description: "Download the best Yono Rummy, Slots and Casino apps with sign-up bonus and refer & earn rewards.",
+    title: "Nova Games – Download Best Rummy & Slots Apps",
+    description: "Download the best Nova Rummy, Slots and Casino apps with sign-up bonus and refer & earn rewards.",
     type: "website",
   },
 };
@@ -64,7 +64,7 @@ export default async function Home() {
         <div style={{ maxWidth: 700, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 60 }}>
           <a href="/" style={{ textDecoration: "none" }}>
             <span style={{ fontSize: 22, fontWeight: 800, color: "#fff", fontFamily: "cursive" }}>
-              🎮 YonoGames
+              🎮 NovaGames
             </span>
           </a>
           <nav style={{ display: "flex", gap: 8 }}>
@@ -80,7 +80,7 @@ export default async function Home() {
         padding: "32px 16px", textAlign: "center",
       }}>
         <h1 style={{ color: "#fff", fontSize: "clamp(22px, 4vw, 36px)", fontWeight: 900, margin: "0 0 10px" }}>
-          Download Best Yono Games 🎮
+          Download Best Nova Games 🎮
         </h1>
         <p style={{ color: "#ffffff99", fontSize: 14, margin: 0 }}>
           Sign-up bonus • Refer & Earn • Daily Rewards
@@ -94,8 +94,8 @@ export default async function Home() {
 
       {/* Footer */}
       <footer style={{ background: "#1a1a1a", color: "#aaa", padding: "24px 16px", textAlign: "center", fontSize: 13 }}>
-        <p style={{ margin: "0 0 8px", color: "#fff", fontWeight: 700 }}>🎮 YonoGames</p>
-        <p style={{ margin: "0 0 8px" }}>© 2025 YonoGames. All rights reserved.</p>
+        <p style={{ margin: "0 0 8px", color: "#fff", fontWeight: 700 }}>🎮 NovaGames</p>
+        <p style={{ margin: "0 0 8px" }}>© 2025 NovaGames. All rights reserved.</p>
         <p style={{ margin: 0 }}>
           <a href="/about-us" style={{ color: "#aaa", textDecoration: "none", marginRight: 16 }}>About Us</a>
           <a href="/disclaimer" style={{ color: "#aaa", textDecoration: "none" }}>Disclaimer</a>
@@ -106,7 +106,7 @@ export default async function Home() {
 }
 
 const demoApps: App[] = [
-  { _id: "1", name: "Yono Rummy", slug: "yono-rummy", category: "top-rated", bonus: 500, minWithdraw: 100, version: "2.1", rating: 4.5, reviewCount: 1200 },
+  { _id: "1", name: "Nova Rummy", slug: "Nova-rummy", category: "top-rated", bonus: 500, minWithdraw: 100, version: "2.1", rating: 4.5, reviewCount: 1200 },
   { _id: "2", name: "Jaiho Rummy", slug: "jaiho-rummy", category: "top-rated", bonus: 300, minWithdraw: 50, version: "1.8", rating: 4.2, reviewCount: 980 },
   { _id: "3", name: "Spin 777", slug: "spin-777", category: "top-rated", bonus: 200, minWithdraw: 100, version: "3.0", rating: 4.0, reviewCount: 750 },
   { _id: "4", name: "ABC Rummy", slug: "abc-rummy", category: "new-games", bonus: 400, minWithdraw: 100, version: "1.0", rating: 4.3, reviewCount: 200 },
