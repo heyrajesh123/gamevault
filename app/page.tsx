@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import TabSection from "./TabSection";
 
 export const metadata: Metadata = {
   title: "Yono Games – Download Best Rummy & Slots Apps",
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 const PROJECT_ID = "eq6o0luu";
 const DATASET = "production";
 
-interface App {
+export interface App {
   _id: string;
   name: string;
   slug: string;
@@ -46,78 +47,8 @@ async function getApps(): Promise<App[]> {
   return demoApps;
 }
 
-function StarRating({ rating }: { rating: number }) {
-  return (
-    <div style={{ display: "flex", gap: 1 }}>
-      {[1, 2, 3, 4, 5].map((s) => (
-        <span key={s} style={{ color: s <= Math.round(rating) ? "#FFD700" : "#ddd", fontSize: 13 }}>★</span>
-      ))}
-    </div>
-  );
-}
-
-function AppCard({ app, rank }: { app: App; rank: number }) {
-  return (
-    <a href={"/" + app.slug} style={{ textDecoration: "none", color: "inherit", display: "block" }}>
-      <div style={{
-        display: "flex", alignItems: "center", gap: 12,
-        background: "#fff", borderRadius: 14, padding: "14px 16px",
-        marginBottom: 10, boxShadow: "0 2px 8px rgba(0,0,0,0.07)",
-        border: "1px solid #f0f0f0", transition: "box-shadow 0.2s",
-      }}>
-        {/* Rank */}
-        <div style={{ color: "#bbb", fontWeight: 700, fontSize: 14, minWidth: 22, textAlign: "center" }}>{rank}</div>
-
-        {/* Logo */}
-        <div style={{
-          width: 58, height: 58, borderRadius: 14, flexShrink: 0, overflow: "hidden",
-          background: "linear-gradient(135deg, #00632b22, #01245922)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-        }}>
-          {app.logoUrl
-            ? <img src={app.logoUrl} alt={app.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-            : <span style={{ fontSize: 28 }}>🎮</span>
-          }
-        </div>
-
-        {/* Info */}
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontWeight: 700, fontSize: 15, color: "#1a1a1a", marginBottom: 3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-            {app.name}
-          </div>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 4 }}>
-            <span style={{ fontSize: 12, color: "#2e7d32", fontWeight: 600 }}>
-              🎁 Bonus: ₹{app.bonus}
-            </span>
-            <span style={{ fontSize: 12, color: "#1565c0", fontWeight: 600 }}>
-              💸 Min WD: ₹{app.minWithdraw}
-            </span>
-            {app.version && (
-              <span style={{ fontSize: 12, color: "#666" }}>
-                v{app.version}
-              </span>
-            )}
-          </div>
-          <StarRating rating={app.rating} />
-        </div>
-
-        {/* Download Button */}
-        <a href={"/" + app.slug} style={{
-          background: "linear-gradient(135deg, #00632b, #007860)",
-          color: "#fff", padding: "8px 14px", borderRadius: 10,
-          fontSize: 13, fontWeight: 700, textDecoration: "none",
-          whiteSpace: "nowrap", flexShrink: 0,
-        }}>
-          ⬇ Download
-        </a>
-      </div>
-    </a>
-  );
-}
-
 export default async function Home() {
   const apps = await getApps();
-
   const topRated = apps.filter((a) => a.category === "top-rated");
   const newGames = apps.filter((a) => a.category === "new-games");
   const otherGames = apps.filter((a) => a.category === "other-games");
@@ -156,62 +87,9 @@ export default async function Home() {
         </p>
       </div>
 
-      {/* Main Content */}
+      {/* Tab Section (Client Component) */}
       <main style={{ maxWidth: 700, margin: "0 auto", padding: "20px 16px 60px" }}>
-
-        {/* Tab Navigation */}
-        <div id="tab-nav" style={{
-          display: "flex", background: "#fff", borderRadius: 14,
-          padding: 6, marginBottom: 20, boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-          gap: 4,
-        }}>
-          {[
-            { id: "top-rated", label: "⭐ Top Rated" },
-            { id: "new-games", label: "🆕 New Games" },
-            { id: "other-games", label: "🎮 Other Games" },
-          ].map((tab, i) => (
-            <button key={tab.id} onClick={() => {}} id={"tab-btn-" + tab.id} style={{
-              flex: 1, padding: "10px 8px", borderRadius: 10, border: "none",
-              background: i === 0 ? "linear-gradient(135deg, #00632b, #007860)" : "transparent",
-              color: i === 0 ? "#fff" : "#666",
-              fontWeight: 700, fontSize: 13, cursor: "pointer",
-            }}>{tab.label}</button>
-          ))}
-        </div>
-
-        {/* Top Rated */}
-        <section id="top-rated">
-          <h2 style={{ fontSize: 16, fontWeight: 700, color: "#1a1a1a", marginBottom: 14 }}>
-            ⭐ Top Rated Yono Games
-          </h2>
-          {topRated.length > 0
-            ? topRated.map((app, i) => <AppCard key={app._id} app={app} rank={i + 1} />)
-            : demoApps.filter(a => a.category === "top-rated").map((app, i) => <AppCard key={app._id} app={app} rank={i + 1} />)
-          }
-        </section>
-
-        {/* New Games */}
-        <section id="new-games" style={{ marginTop: 32 }}>
-          <h2 style={{ fontSize: 16, fontWeight: 700, color: "#1a1a1a", marginBottom: 14 }}>
-            🆕 New Yono Games
-          </h2>
-          {newGames.length > 0
-            ? newGames.map((app, i) => <AppCard key={app._id} app={app} rank={i + 1} />)
-            : demoApps.filter(a => a.category === "new-games").map((app, i) => <AppCard key={app._id} app={app} rank={i + 1} />)
-          }
-        </section>
-
-        {/* Other Games */}
-        <section id="other-games" style={{ marginTop: 32 }}>
-          <h2 style={{ fontSize: 16, fontWeight: 700, color: "#1a1a1a", marginBottom: 14 }}>
-            🎮 Other Games
-          </h2>
-          {otherGames.length > 0
-            ? otherGames.map((app, i) => <AppCard key={app._id} app={app} rank={i + 1} />)
-            : demoApps.filter(a => a.category === "other-games").map((app, i) => <AppCard key={app._id} app={app} rank={i + 1} />)
-          }
-        </section>
-
+        <TabSection topRated={topRated} newGames={newGames} otherGames={otherGames} />
       </main>
 
       {/* Footer */}
@@ -223,32 +101,6 @@ export default async function Home() {
           <a href="/disclaimer" style={{ color: "#aaa", textDecoration: "none" }}>Disclaimer</a>
         </p>
       </footer>
-
-      {/* Tab switching script */}
-      <script dangerouslySetInnerHTML={{ __html: `
-        function showTab(tabId) {
-          ['top-rated', 'new-games', 'other-games'].forEach(function(id) {
-            var section = document.getElementById(id);
-            var btn = document.getElementById('tab-btn-' + id);
-            if (id === tabId) {
-              section.style.display = 'block';
-              btn.style.background = 'linear-gradient(135deg, #00632b, #007860)';
-              btn.style.color = '#fff';
-            } else {
-              section.style.display = 'none';
-              btn.style.background = 'transparent';
-              btn.style.color = '#666';
-            }
-          });
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-          ['top-rated', 'new-games', 'other-games'].forEach(function(id) {
-            var btn = document.getElementById('tab-btn-' + id);
-            btn.addEventListener('click', function() { showTab(id); });
-          });
-          showTab('top-rated');
-        });
-      ` }} />
     </div>
   );
 }
