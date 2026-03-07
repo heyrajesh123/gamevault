@@ -17,7 +17,7 @@ function AppCard({ app, rank }: { app: App; rank: number }) {
         <div style={{
           display: "flex",
           alignItems: "center",
-          gap: 10,
+          gap: 1,
           padding: "10px 10px",
         }}>
           {/* Rank */}
