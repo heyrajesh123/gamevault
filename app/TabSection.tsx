@@ -18,7 +18,7 @@ function AppCard({ app, rank }: { app: App; rank: number }) {
           display: "flex",
           alignItems: "center",
           gap: 1,
-          padding: "10px 10px",
+          padding: "10px 2px",
         }}>
           {/* Rank */}
           <span style={{ color: "#aaa", fontWeight: 600, fontSize: 13, width: 20, flexShrink: 0, textAlign: "center" }}>
