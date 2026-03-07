@@ -1,9 +1,10 @@
 import { Metadata } from "next";
 import TabSection from "./TabSection";
+import Header from "./Header";
 
 export const metadata: Metadata = {
   title: "Nova Games – Download Best Rummy & Slots Apps",
-  description: "Download the best Nova Rummy, Slots and Casino apps. Get sign-up bonus, refer & earn rewards. Find top rated, new and other Nova games.",
+  description: "Download the best Nova Rummy, Slots and Casino apps. Get sign-up bonus, refer & earn rewards.",
   openGraph: {
     title: "Nova Games – Download Best Rummy & Slots Apps",
     description: "Download the best Nova Rummy, Slots and Casino apps with sign-up bonus and refer & earn rewards.",
@@ -55,54 +56,10 @@ export default async function Home() {
 
   return (
     <div style={{ minHeight: "100vh", background: "#f5f7fa", fontFamily: "'Segoe UI', system-ui, sans-serif" }}>
-
-      {/* Header with Hamburger */}
-      <header style={{
-        background: "linear-gradient(300deg, #00632b 0%, #00785f 48%, #012459 100%)",
-        padding: "0 16px", position: "sticky", top: 0, zIndex: 100,
-      }}>
-        <div style={{ maxWidth: 700, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 60 }}>
-          <a href="/" style={{ textDecoration: "none" }}>
-            <span style={{ fontSize: 22, fontWeight: 800, color: "#fff", fontFamily: "cursive" }}>
-              🎮 NovaGames
-            </span>
-          </a>
-
-          {/* Desktop Nav */}
-          <nav id="desktop-nav" style={{ display: "flex", gap: 8 }}>
-            <a href="/" style={{ color: "#fff", textDecoration: "none", fontSize: 13, padding: "6px 14px", borderRadius: 8, background: "#ffffff22" }}>🏠 Home</a>
-            <a href="/about-us" style={{ color: "#fff", textDecoration: "none", fontSize: 13, padding: "6px 14px" }}>About</a>
-            <a href="/disclaimer" style={{ color: "#fff", textDecoration: "none", fontSize: 13, padding: "6px 14px" }}>Disclaimer</a>
-          </nav>
-
-          {/* Hamburger Button */}
-          <button id="hamburger-btn" style={{
-            background: "none", border: "none", cursor: "pointer",
-            display: "flex", flexDirection: "column", gap: 5, padding: 8,
-          }} aria-label="Menu">
-            <span style={{ width: 24, height: 2, background: "#fff", borderRadius: 2, display: "block" }}></span>
-            <span style={{ width: 24, height: 2, background: "#fff", borderRadius: 2, display: "block" }}></span>
-            <span style={{ width: 24, height: 2, background: "#fff", borderRadius: 2, display: "block" }}></span>
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        <div id="mobile-menu" style={{
-          display: "none", flexDirection: "column",
-          background: "#014d22", borderTop: "1px solid #ffffff22",
-          padding: "8px 0",
-        }}>
-          <a href="/" style={{ color: "#fff", textDecoration: "none", padding: "12px 20px", fontSize: 15, borderBottom: "1px solid #ffffff11" }}>🏠 Home</a>
-          <a href="/about-us" style={{ color: "#fff", textDecoration: "none", padding: "12px 20px", fontSize: 15, borderBottom: "1px solid #ffffff11" }}>ℹ️ About Us</a>
-          <a href="/disclaimer" style={{ color: "#fff", textDecoration: "none", padding: "12px 20px", fontSize: 15 }}>📋 Disclaimer</a>
-        </div>
-      </header>
+      <Header />
 
       {/* Banner */}
-      <div style={{
-        background: "linear-gradient(135deg, #00632b, #012459)",
-        padding: "32px 16px", textAlign: "center",
-      }}>
+      <div style={{ background: "linear-gradient(135deg, #00632b, #012459)", padding: "32px 16px", textAlign: "center" }}>
         <h1 style={{ color: "#fff", fontSize: "clamp(22px, 4vw, 36px)", fontWeight: 900, margin: "0 0 10px" }}>
           Download Best Nova Games 🎮
         </h1>
@@ -111,51 +68,21 @@ export default async function Home() {
         </p>
       </div>
 
-      {/* Tab Section (Client Component) */}
       <main style={{ maxWidth: 700, margin: "0 auto", padding: "20px 16px 60px" }}>
         <TabSection topRated={topRated} newGames={newGames} otherGames={otherGames} />
       </main>
 
-      {/* Footer */}
       <footer style={{ background: "#1a1a1a", color: "#aaa", padding: "24px 16px", textAlign: "center", fontSize: 13 }}>
         <p style={{ margin: "0 0 8px", color: "#fff", fontWeight: 700 }}>🎮 NovaGames</p>
         <p style={{ margin: "0 0 8px" }}>© 2025 NovaGames. All rights reserved.</p>
-        <p style={{ margin: 0 }}>
-          <a href="/about-us" style={{ color: "#aaa", textDecoration: "none", marginRight: 16 }}>About Us</a>
+        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "0 16px" }}>
+          <a href="/about-us" style={{ color: "#aaa", textDecoration: "none" }}>About Us</a>
+          <a href="/contact-us" style={{ color: "#aaa", textDecoration: "none" }}>Contact Us</a>
           <a href="/disclaimer" style={{ color: "#aaa", textDecoration: "none" }}>Disclaimer</a>
-        </p>
+          <a href="/privacy-policy" style={{ color: "#aaa", textDecoration: "none" }}>Privacy Policy</a>
+          <a href="/terms-and-conditions" style={{ color: "#aaa", textDecoration: "none" }}>Terms & Conditions</a>
+        </div>
       </footer>
-
-      {/* Hamburger Script */}
-      <script dangerouslySetInnerHTML={{ __html: `
-        document.addEventListener('DOMContentLoaded', function() {
-          var btn = document.getElementById('hamburger-btn');
-          var menu = document.getElementById('mobile-menu');
-          var desktopNav = document.getElementById('desktop-nav');
-
-          // Hide desktop nav on mobile
-          function checkWidth() {
-            if (window.innerWidth < 600) {
-              desktopNav.style.display = 'none';
-              btn.style.display = 'flex';
-            } else {
-              desktopNav.style.display = 'flex';
-              btn.style.display = 'none';
-              menu.style.display = 'none';
-            }
-          }
-          checkWidth();
-          window.addEventListener('resize', checkWidth);
-
-          btn.addEventListener('click', function() {
-            if (menu.style.display === 'none' || menu.style.display === '') {
-              menu.style.display = 'flex';
-            } else {
-              menu.style.display = 'none';
-            }
-          });
-        });
-      ` }} />
     </div>
   );
 }
