@@ -72,8 +72,8 @@ export default function TabSection({ topRated, newGames, otherGames }: Props) {
   const [activeTab, setActiveTab] = useState("top-rated");
 
   const tabs = [
-    { id: "top-rated", label: "⭐ Top Rated", apps: topRated },
     { id: "new-games", label: "🆕 New Games", apps: newGames },
+    { id: "top-rated", label: "⭐ Top Rated", apps: topRated },
     { id: "other-games", label: "🎮 Other Games", apps: otherGames },
   ];
 
