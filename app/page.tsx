@@ -68,7 +68,7 @@ export default async function Home() {
         </p>
       </div>
 
-      <main style={{ maxWidth: 700, margin: "0 auto", padding: "20px 16px 60px" }}>
+      <main style={{ maxWidth: 700, margin: "0 auto", padding: "12px 0px 60px" }}>
         <TabSection topRated={topRated} newGames={newGames} otherGames={otherGames} />
       </main>
 
