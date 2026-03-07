@@ -10,7 +10,7 @@ function AppCard({ app, rank }: { app: App; rank: number }) {
         border: "1px solid #ddd",
         borderRadius: 12,
         padding: 2,
-        marginBottom: 16,
+        marginBottom: 5,
         background: "#fff",
         boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
       }}>
@@ -21,7 +21,7 @@ function AppCard({ app, rank }: { app: App; rank: number }) {
           padding: "2px 2px",
         }}>
           {/* Rank */}
-          <span style={{ color: "#aaa", fontWeight: 600, fontSize: 13, width: 20, flexShrink: 0, textAlign: "center" }}>
+          <span style={{ color: "#aaa", fontWeight: 600, fontSize: 13, width: 8, flexShrink: 0, textAlign: "center" }}>
             {rank}.
           </span>
 
@@ -41,7 +41,7 @@ function AppCard({ app, rank }: { app: App; rank: number }) {
             <div style={{ fontWeight: 800, fontSize: 15, color: "#111", marginBottom: 5, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {app.name}
             </div>
-            <div style={{ fontSize: 12, fontWeight: 600, color: "#d84315", marginBottom: 3, whiteSpace: "nowrap" }}>
+            <div style={{ fontSize: 12, fontWeight: 600, color: "#d84315", marginBottom: 1, whiteSpace: "nowrap" }}>
               🎁 Sign Up Bonus ₹{app.bonus}
             </div>
             <div style={{ fontSize: 12, fontWeight: 600, color: "#1565c0", whiteSpace: "nowrap" }}>
