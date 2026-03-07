@@ -48,20 +48,26 @@ function AppCard({ app, rank }: { app: App; rank: number }) {
             </div>
           </div>
 
-          {/* Download Button */}
+          {/* Download Button — green, icon + text side by side */}
           <div style={{
             flexShrink: 0,
-            background: "linear-gradient(180deg, #4a90e2 0%, #1a5fcf 100%)",
+            background: "linear-gradient(180deg, #2e9e4f 0%, #1a7a35 100%)",
             color: "#fff",
             borderRadius: 10,
-            padding: "8px 12px",
-            textAlign: "center",
-            fontSize: 12,
+            padding: "10px 14px",
+            display: "flex",
+            alignItems: "center",
+            gap: 6,
+            fontSize: 13,
             fontWeight: 700,
-            boxShadow: "0 3px 8px rgba(26,95,207,0.4)",
-            lineHeight: 1.4,
+            boxShadow: "0 3px 8px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2)",
+            border: "1px solid #166b2a",
+            whiteSpace: "nowrap",
           }}>
-            <div style={{ fontSize: 16 }}>⬇</div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+              <path d="M12 16l-6-6h4V4h4v6h4l-6 6z"/>
+              <path d="M20 18H4v2h16v-2z"/>
+            </svg>
             Download
           </div>
         </div>
