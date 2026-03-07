@@ -31,7 +31,7 @@ export interface App {
 async function getApps(): Promise<App[]> {
   try {
     const query = encodeURIComponent(
-      `*[_type == "app"] | order(reviewCount desc) {
+      `*[_type == "app"] | order(_createdAt desc) {
         _id, name, "slug": slug.current, category,
         bonus, minWithdraw, version, rating, reviewCount, isFeatured,
         "logoUrl": logo.asset->url
@@ -39,7 +39,7 @@ async function getApps(): Promise<App[]> {
     );
     const res = await fetch(
       `https://${PROJECT_ID}.api.sanity.io/v2021-10-21/data/query/${DATASET}?query=${query}`,
-      { next: { revalidate: 60 } }
+      { next: { revalidate: 30 } }
     );
     const data = await res.json();
     if (data.result?.length > 0) return data.result;
@@ -56,10 +56,10 @@ export default async function Home() {
   return (
     <div style={{ minHeight: "100vh", background: "#f5f7fa", fontFamily: "'Segoe UI', system-ui, sans-serif" }}>
 
-      {/* Header */}
+      {/* Header with Hamburger */}
       <header style={{
         background: "linear-gradient(300deg, #00632b 0%, #00785f 48%, #012459 100%)",
-        padding: "0 16px",
+        padding: "0 16px", position: "sticky", top: 0, zIndex: 100,
       }}>
         <div style={{ maxWidth: 700, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 60 }}>
           <a href="/" style={{ textDecoration: "none" }}>
@@ -67,10 +67,34 @@ export default async function Home() {
               🎮 NovaGames
             </span>
           </a>
-          <nav style={{ display: "flex", gap: 8 }}>
-            <a href="/" style={{ color: "#fff", textDecoration: "none", fontSize: 13, padding: "6px 12px", borderRadius: 8, background: "#ffffff22" }}>Home</a>
-            <a href="/about-us" style={{ color: "#fff", textDecoration: "none", fontSize: 13, padding: "6px 12px" }}>About</a>
+
+          {/* Desktop Nav */}
+          <nav id="desktop-nav" style={{ display: "flex", gap: 8 }}>
+            <a href="/" style={{ color: "#fff", textDecoration: "none", fontSize: 13, padding: "6px 14px", borderRadius: 8, background: "#ffffff22" }}>🏠 Home</a>
+            <a href="/about-us" style={{ color: "#fff", textDecoration: "none", fontSize: 13, padding: "6px 14px" }}>About</a>
+            <a href="/disclaimer" style={{ color: "#fff", textDecoration: "none", fontSize: 13, padding: "6px 14px" }}>Disclaimer</a>
           </nav>
+
+          {/* Hamburger Button */}
+          <button id="hamburger-btn" style={{
+            background: "none", border: "none", cursor: "pointer",
+            display: "flex", flexDirection: "column", gap: 5, padding: 8,
+          }} aria-label="Menu">
+            <span style={{ width: 24, height: 2, background: "#fff", borderRadius: 2, display: "block" }}></span>
+            <span style={{ width: 24, height: 2, background: "#fff", borderRadius: 2, display: "block" }}></span>
+            <span style={{ width: 24, height: 2, background: "#fff", borderRadius: 2, display: "block" }}></span>
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        <div id="mobile-menu" style={{
+          display: "none", flexDirection: "column",
+          background: "#014d22", borderTop: "1px solid #ffffff22",
+          padding: "8px 0",
+        }}>
+          <a href="/" style={{ color: "#fff", textDecoration: "none", padding: "12px 20px", fontSize: 15, borderBottom: "1px solid #ffffff11" }}>🏠 Home</a>
+          <a href="/about-us" style={{ color: "#fff", textDecoration: "none", padding: "12px 20px", fontSize: 15, borderBottom: "1px solid #ffffff11" }}>ℹ️ About Us</a>
+          <a href="/disclaimer" style={{ color: "#fff", textDecoration: "none", padding: "12px 20px", fontSize: 15 }}>📋 Disclaimer</a>
         </div>
       </header>
 
@@ -101,6 +125,37 @@ export default async function Home() {
           <a href="/disclaimer" style={{ color: "#aaa", textDecoration: "none" }}>Disclaimer</a>
         </p>
       </footer>
+
+      {/* Hamburger Script */}
+      <script dangerouslySetInnerHTML={{ __html: `
+        document.addEventListener('DOMContentLoaded', function() {
+          var btn = document.getElementById('hamburger-btn');
+          var menu = document.getElementById('mobile-menu');
+          var desktopNav = document.getElementById('desktop-nav');
+
+          // Hide desktop nav on mobile
+          function checkWidth() {
+            if (window.innerWidth < 600) {
+              desktopNav.style.display = 'none';
+              btn.style.display = 'flex';
+            } else {
+              desktopNav.style.display = 'flex';
+              btn.style.display = 'none';
+              menu.style.display = 'none';
+            }
+          }
+          checkWidth();
+          window.addEventListener('resize', checkWidth);
+
+          btn.addEventListener('click', function() {
+            if (menu.style.display === 'none' || menu.style.display === '') {
+              menu.style.display = 'flex';
+            } else {
+              menu.style.display = 'none';
+            }
+          });
+        });
+      ` }} />
     </div>
   );
 }
