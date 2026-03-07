@@ -1,12 +1,13 @@
 import { Metadata } from "next";
 import TabSection from "./TabSection";
 import Header from "./Header";
+import Footer from "./Footer";
 
 export const metadata: Metadata = {
-  title: "Nova Games – Download Best Rummy & Slots Apps",
+  title: "NovaGames – Download Best Rummy & Slots Apps",
   description: "Download the best Nova Rummy, Slots and Casino apps. Get sign-up bonus, refer & earn rewards.",
   openGraph: {
-    title: "Nova Games – Download Best Rummy & Slots Apps",
+    title: "NovaGames – Download Best Rummy & Slots Apps",
     description: "Download the best Nova Rummy, Slots and Casino apps with sign-up bonus and refer & earn rewards.",
     type: "website",
   },
@@ -58,7 +59,6 @@ export default async function Home() {
     <div style={{ minHeight: "100vh", background: "#f5f7fa", fontFamily: "'Segoe UI', system-ui, sans-serif" }}>
       <Header />
 
-      {/* Banner */}
       <div style={{ background: "linear-gradient(135deg, #00632b, #012459)", padding: "32px 16px", textAlign: "center" }}>
         <h1 style={{ color: "#fff", fontSize: "clamp(22px, 4vw, 36px)", fontWeight: 900, margin: "0 0 10px" }}>
           Download Best Nova Games 🎮
@@ -68,21 +68,11 @@ export default async function Home() {
         </p>
       </div>
 
-      <main style={{ maxWidth: 700, margin: "0 auto", padding: "12px 0px 60px" }}>
+      <main style={{ maxWidth: 700, margin: "0 auto", padding: "12px 8px 60px" }}>
         <TabSection topRated={topRated} newGames={newGames} otherGames={otherGames} />
       </main>
 
-      <footer style={{ background: "#1a1a1a", color: "#aaa", padding: "24px 16px", textAlign: "center", fontSize: 13 }}>
-        <p style={{ margin: "0 0 8px", color: "#fff", fontWeight: 700 }}>🎮 NovaGames</p>
-        <p style={{ margin: "0 0 8px" }}>© 2025 NovaGames. All rights reserved.</p>
-        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "0 16px" }}>
-          <a href="/about-us" style={{ color: "#aaa", textDecoration: "none" }}>About Us</a>
-          <a href="/contact-us" style={{ color: "#aaa", textDecoration: "none" }}>Contact Us</a>
-          <a href="/disclaimer" style={{ color: "#aaa", textDecoration: "none" }}>Disclaimer</a>
-          <a href="/privacy-policy" style={{ color: "#aaa", textDecoration: "none" }}>Privacy Policy</a>
-          <a href="/terms-and-conditions" style={{ color: "#aaa", textDecoration: "none" }}>Terms & Conditions</a>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
