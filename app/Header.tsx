@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -31,29 +32,25 @@ export default function Header() {
         display: "flex", alignItems: "center", justifyContent: "space-between", height: 60,
       }}>
         {/* Logo */}
-        <a href="/" style={{ textDecoration: "none", flexShrink: 0 }}>
+        <Link href="/" style={{ textDecoration: "none", flexShrink: 0 }}>
           <span style={{ fontSize: 20, fontWeight: 800, color: "#fff", fontFamily: "cursive" }}>
-            🎮 NovaGames
+            🎮 YonoGames
           </span>
-        </a>
+        </Link>
 
-        {/* Desktop Nav — only shown on desktop */}
+        {/* Desktop Nav */}
         {!isMobile && (
           <nav style={{ display: "flex", gap: 4, alignItems: "center" }}>
             {navLinks.map((link) => (
-              <a key={link.href} href={link.href} style={{
+              <Link key={link.href} href={link.href} style={{
                 color: "#fff", textDecoration: "none", fontSize: 13,
                 padding: "6px 10px", borderRadius: 8,
-                transition: "background 0.2s",
-              }}
-              onMouseEnter={e => (e.currentTarget.style.background = "#ffffff22")}
-              onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
-              >{link.label}</a>
+              }}>{link.label}</Link>
             ))}
           </nav>
         )}
 
-        {/* Hamburger — only on mobile */}
+        {/* Hamburger — mobile only */}
         {isMobile && (
           <button
             onClick={() => setMenuOpen(!menuOpen)}
@@ -71,10 +68,10 @@ export default function Header() {
       {isMobile && menuOpen && (
         <div style={{ background: "#014d22", borderTop: "1px solid #ffffff22" }}>
           {navLinks.map((link) => (
-            <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)} style={{
+            <Link key={link.href} href={link.href} onClick={() => setMenuOpen(false)} style={{
               display: "block", color: "#fff", textDecoration: "none",
               padding: "13px 20px", fontSize: 14, borderBottom: "1px solid #ffffff11",
-            }}>{link.label}</a>
+            }}>{link.label}</Link>
           ))}
         </div>
       )}
