@@ -33,7 +33,7 @@ export default function Header() {
         {/* Logo */}
         <a href="/" style={{ textDecoration: "none", flexShrink: 0 }}>
           <span style={{ fontSize: 20, fontWeight: 800, color: "#fff", fontFamily: "cursive" }}>
-            🎮 YonoGames
+            🎮 NovaGames
           </span>
         </a>
 
