@@ -38,7 +38,7 @@ function AppCard({ app, rank }: { app: App; rank: number }) {
 
           {/* Text Info */}
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontWeight: 800, fontSize: 15, color: "#111", marginBottom: 5, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            <div style={{ fontWeight: 600, fontSize: 15, color: "#111", marginBottom: 5, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {app.name}
             </div>
             <div style={{ fontSize: 12, fontWeight: 600, color: "#d84315", marginBottom: 1, whiteSpace: "nowrap" }}>
