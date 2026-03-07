@@ -43,7 +43,7 @@ async function getApp(slug: string): Promise<App | null> {
     );
     const res = await fetch(
       `https://${PROJECT_ID}.api.sanity.io/v2021-10-21/data/query/${DATASET}?query=${query}`,
-      { next: { revalidate: 60 } }
+      { next: { revalidate: 3600 } }
     );
     const data = await res.json();
     return data.result || null;
@@ -60,7 +60,7 @@ async function getRelatedApps(currentSlug: string): Promise<RelatedApp[]> {
     );
     const res = await fetch(
       `https://${PROJECT_ID}.api.sanity.io/v2021-10-21/data/query/${DATASET}?query=${query}`,
-      { next: { revalidate: 60 } }
+      { next: { revalidate: 3600 } }
     );
     const data = await res.json();
     return data.result || [];
