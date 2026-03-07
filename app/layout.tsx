@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 
 export const metadata: Metadata = {
-  title: "YonoGames – Download Best Rummy & Slots Apps",
-  description: "Download the best Yono Rummy, Slots and Casino apps.",
+  title: "NovaGames – Download Best Rummy & Slots Apps",
+  description: "Download the best Nova Rummy, Slots and Casino apps.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
