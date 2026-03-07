@@ -1,44 +1,24 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Header from "../Header";
 
 const PROJECT_ID = "eq6o0luu";
 const DATASET = "production";
 
-interface Screenshot {
-  imageUrl: string;
-  altText: string;
-}
+interface Screenshot { imageUrl: string; altText: string; }
 
 interface App {
-  _id: string;
-  name: string;
-  slug: string;
-  logoUrl?: string;
-  category: string;
-  bonus: number;
-  minWithdraw: number;
-  version?: string;
-  size?: string;
-  downloadLink: string;
-  rating: number;
-  reviewCount: number;
-  perRefer?: number;
-  developerName?: string;
-  metaTitle?: string;
-  metaDescription?: string;
-  appInformation?: string;
-  telegramLink?: string;
-  screenshots: Screenshot[];
+  _id: string; name: string; slug: string; logoUrl?: string;
+  category: string; bonus: number; minWithdraw: number;
+  version?: string; size?: string; downloadLink: string;
+  rating: number; reviewCount: number; perRefer?: number;
+  developerName?: string; metaTitle?: string; metaDescription?: string;
+  appInformation?: string; telegramLink?: string; screenshots: Screenshot[];
 }
 
 interface RelatedApp {
-  _id: string;
-  name: string;
-  slug: string;
-  logoUrl?: string;
-  bonus: number;
-  minWithdraw: number;
-  rating: number;
+  _id: string; name: string; slug: string; logoUrl?: string;
+  bonus: number; minWithdraw: number; rating: number;
 }
 
 async function getApp(slug: string): Promise<App | null> {
@@ -83,7 +63,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const app = await getApp(params.slug);
   if (!app) return { title: "App Not Found – YonoGames" };
   const title = app.metaTitle || `${app.name} APK Download – ₹${app.bonus} Bonus | YonoGames`;
-  const description = app.metaDescription || `Download ${app.name} APK and get ₹${app.bonus} sign-up bonus. Minimum withdrawal ₹${app.minWithdraw}. Play and win real cash.`;
+  const description = app.metaDescription || `Download ${app.name} APK and get ₹${app.bonus} sign-up bonus. Minimum withdrawal ₹${app.minWithdraw}.`;
   return {
     title, description,
     openGraph: { title, description, images: app.logoUrl ? [app.logoUrl] : [], type: "website" },
@@ -94,7 +74,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 export default async function AppPage({ params }: { params: { slug: string } }) {
   const app = await getApp(params.slug);
   if (!app) notFound();
-
   const relatedApps = await getRelatedApps(params.slug);
 
   const infoRows = [
@@ -109,59 +88,43 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
   ].filter(Boolean) as { label: string; value: string }[];
 
   const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "MobileApplication",
-    "name": app.name,
-    "description": app.metaDescription || `Download ${app.name} and get ₹${app.bonus} bonus.`,
-    "operatingSystem": "Android",
-    "applicationCategory": "GameApplication",
+    "@context": "https://schema.org", "@type": "MobileApplication",
+    "name": app.name, "operatingSystem": "Android", "applicationCategory": "GameApplication",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": app.rating,
-      "bestRating": 5,
-      "worstRating": 1,
-      "ratingCount": app.reviewCount || 1,
-    },
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": app.rating, "bestRating": 5, "worstRating": 1, "ratingCount": app.reviewCount || 1 },
   };
+
+  const footer = (
+    <footer style={{ background: "#1a1a1a", color: "#aaa", padding: "24px 16px", textAlign: "center", fontSize: 13 }}>
+      <p style={{ margin: "0 0 8px", color: "#fff", fontWeight: 700 }}>🎮 YonoGames</p>
+      <p style={{ margin: "0 0 8px" }}>© 2025 YonoGames. All rights reserved.</p>
+      <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "0 16px" }}>
+        <a href="/about-us" style={{ color: "#aaa", textDecoration: "none" }}>About Us</a>
+        <a href="/contact-us" style={{ color: "#aaa", textDecoration: "none" }}>Contact Us</a>
+        <a href="/disclaimer" style={{ color: "#aaa", textDecoration: "none" }}>Disclaimer</a>
+        <a href="/privacy-policy" style={{ color: "#aaa", textDecoration: "none" }}>Privacy Policy</a>
+        <a href="/terms-and-conditions" style={{ color: "#aaa", textDecoration: "none" }}>Terms & Conditions</a>
+      </div>
+    </footer>
+  );
 
   return (
     <div style={{ minHeight: "100vh", background: "#f5f7fa", fontFamily: "'Segoe UI', system-ui, sans-serif" }}>
-
-      {/* Header */}
-      <header style={{
-        background: "linear-gradient(300deg, #00632b 0%, #00785f 48%, #012459 100%)",
-        padding: "0 16px", position: "sticky", top: 0, zIndex: 100,
-      }}>
-        <div style={{ maxWidth: 700, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 60 }}>
-          <a href="/" style={{ textDecoration: "none" }}>
-            <span style={{ fontSize: 22, fontWeight: 800, color: "#fff", fontFamily: "cursive" }}>🎮 YonoGames</span>
-          </a>
-          <a href="/" style={{ color: "#fff", fontSize: 13, textDecoration: "none", background: "#ffffff22", padding: "6px 14px", borderRadius: 8 }}>
-            ← Back
-          </a>
-        </div>
-      </header>
+      <Header />
 
       <main style={{ maxWidth: 700, margin: "0 auto", padding: "20px 16px 60px" }}>
 
         {/* App Header Card */}
         <div style={{ background: "#fff", borderRadius: 16, padding: 20, marginBottom: 16, boxShadow: "0 2px 12px rgba(0,0,0,0.08)" }}>
           <div style={{ display: "flex", gap: 16, alignItems: "flex-start", marginBottom: 20 }}>
-
-            {/* Logo */}
             <div style={{ width: 90, height: 90, borderRadius: 20, overflow: "hidden", flexShrink: 0, border: "2px solid #f0f0f0" }}>
               {app.logoUrl
                 ? <img src={app.logoUrl} alt={app.name + " Logo"} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 : <div style={{ width: "100%", height: "100%", background: "linear-gradient(135deg,#00632b,#012459)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 40 }}>🎮</div>
               }
             </div>
-
-            {/* Info */}
             <div style={{ flex: 1 }}>
               <h1 style={{ margin: "0 0 8px", fontSize: 22, fontWeight: 800, color: "#1a1a1a", lineHeight: 1.2 }}>{app.name}</h1>
-
-              {/* Tags — Bonus + Size */}
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 10 }}>
                 <span style={{ background: "#e8f5e9", color: "#2e7d32", padding: "5px 12px", borderRadius: 20, fontSize: 13, fontWeight: 600 }}>
                   🎁 ₹{app.bonus} Bonus
@@ -172,8 +135,6 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
                   </span>
                 )}
               </div>
-
-              {/* Stars */}
               <div style={{ display: "flex", gap: 1, alignItems: "center" }}>
                 {[1,2,3,4,5].map(s => (
                   <span key={s} style={{ color: s <= Math.round(app.rating) ? "#FFD700" : "#ddd", fontSize: 16 }}>★</span>
@@ -183,32 +144,26 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
             </div>
           </div>
 
-          {/* Download Button */}
           <a href={app.downloadLink} target="_blank" rel="noopener noreferrer" style={{
             display: "block", textAlign: "center", textDecoration: "none",
             background: "linear-gradient(135deg, #00632b, #007860)",
             color: "#fff", fontWeight: 800, fontSize: 17,
             padding: "16px", borderRadius: 14, marginBottom: 14,
             boxShadow: "0 6px 20px rgba(0,99,43,0.35)",
-          }}>
-            ⬇ Download {app.name} APK
-          </a>
+          }}>⬇ Download {app.name} APK</a>
 
-          {/* Telegram */}
           {app.telegramLink && (
             <a href={app.telegramLink} target="_blank" rel="noopener noreferrer" style={{
               display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
               background: "#0088cc", color: "#fff", textDecoration: "none",
               padding: "12px", borderRadius: 12, fontWeight: 600, fontSize: 14,
-            }}>
-              ✈ Join our Telegram Channel
-            </a>
+            }}>✈ Join our Telegram Channel</a>
           )}
         </div>
 
-        {/* App Info Table */}
+        {/* App Details Table */}
         <div style={{ background: "#fff", borderRadius: 16, padding: 20, marginBottom: 16, boxShadow: "0 2px 12px rgba(0,0,0,0.08)" }}>
-          <h2 style={{ margin: "0 0 14px", fontSize: 16, fontWeight: 700, color: "#1a1a1a" }}>App Details</h2>
+          <h2 style={{ margin: "0 0 14px", fontSize: 16, fontWeight: 700 }}>App Details</h2>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <tbody>
               {infoRows.map((row, i) => (
@@ -227,10 +182,7 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
             <h2 style={{ margin: "0 0 14px", fontSize: 16, fontWeight: 700 }}>Screenshots</h2>
             <div style={{ display: "flex", gap: 10, overflowX: "auto", scrollbarWidth: "none" }}>
               {app.screenshots.map((ss, i) => (
-                <img key={i} src={ss.imageUrl} alt={ss.altText || app.name} style={{
-                  height: 180, borderRadius: 10, flexShrink: 0, objectFit: "cover",
-                  border: "1px solid #f0f0f0",
-                }} />
+                <img key={i} src={ss.imageUrl} alt={ss.altText || app.name} style={{ height: 180, borderRadius: 10, flexShrink: 0, objectFit: "cover", border: "1px solid #f0f0f0" }} />
               ))}
             </div>
           </div>
@@ -240,8 +192,7 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
         {app.appInformation && (
           <div style={{ background: "#fff", borderRadius: 16, padding: 20, marginBottom: 16, boxShadow: "0 2px 12px rgba(0,0,0,0.08)" }}>
             <h2 style={{ margin: "0 0 12px", fontSize: 16, fontWeight: 700 }}>App Information</h2>
-            <div style={{ color: "#444", fontSize: 14, lineHeight: 1.7 }}
-              dangerouslySetInnerHTML={{ __html: app.appInformation }} />
+            <div style={{ color: "#444", fontSize: 14, lineHeight: 1.7 }} dangerouslySetInnerHTML={{ __html: app.appInformation }} />
           </div>
         )}
 
@@ -275,27 +226,18 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
                   background: "#f9f9f9", borderRadius: 14, padding: "12px 14px",
                   border: "1px solid #f0f0f0",
                 }}>
-                  {/* Logo */}
                   <div style={{ width: 52, height: 52, borderRadius: 12, overflow: "hidden", flexShrink: 0, background: "#eee" }}>
                     {ra.logoUrl
                       ? <img src={ra.logoUrl} alt={ra.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                       : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24 }}>🎮</div>
                     }
                   </div>
-
-                  {/* Info */}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontWeight: 700, fontSize: 14, color: "#1a1a1a", marginBottom: 3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{ra.name}</div>
                     <div style={{ fontSize: 12, color: "#2e7d32", fontWeight: 600, marginBottom: 2 }}>Sign Up Bonus ₹{ra.bonus}</div>
                     <div style={{ fontSize: 12, color: "#555" }}>Min. Withdraw ₹{ra.minWithdraw}/-</div>
                   </div>
-
-                  {/* Download */}
-                  <div style={{
-                    background: "linear-gradient(135deg, #00632b, #007860)",
-                    color: "#fff", padding: "7px 12px", borderRadius: 10,
-                    fontSize: 12, fontWeight: 700, flexShrink: 0,
-                  }}>
+                  <div style={{ background: "linear-gradient(135deg, #00632b, #007860)", color: "#fff", padding: "7px 12px", borderRadius: 10, fontSize: 12, fontWeight: 700, flexShrink: 0 }}>
                     ⬇ Download
                   </div>
                 </a>
@@ -303,19 +245,9 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
             </div>
           </div>
         )}
-
       </main>
 
-      {/* Footer */}
-      <footer style={{ background: "#1a1a1a", color: "#aaa", padding: "24px 16px", textAlign: "center", fontSize: 13 }}>
-        <p style={{ margin: "0 0 8px", color: "#fff", fontWeight: 700 }}>🎮 YonoGames</p>
-        <p style={{ margin: "0 0 8px" }}>© 2025 YonoGames. All rights reserved.</p>
-        <p style={{ margin: 0 }}>
-          <a href="/about-us" style={{ color: "#aaa", textDecoration: "none", marginRight: 16 }}>About Us</a>
-          <a href="/disclaimer" style={{ color: "#aaa", textDecoration: "none" }}>Disclaimer</a>
-        </p>
-      </footer>
-
+      {footer}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
     </div>
   );
