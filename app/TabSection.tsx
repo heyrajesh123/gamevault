@@ -37,7 +37,7 @@ function AppCard({ app, rank }: { app: App; rank: number }) {
           </div>
 
           {/* Text Info */}
-          <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ flex: 1, minWidth: 0, paddingLeft: 8 }}>
             <div style={{ fontWeight: 600, fontSize: 15, color: "#111", marginBottom: 5, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {app.name}
             </div>
@@ -84,17 +84,21 @@ interface Props {
 }
 
 export default function TabSection({ topRated, newGames, otherGames }: Props) {
-  const [activeTab, setActiveTab] = useState("top-rated");
+  const [activeTab, setActiveTab] = useState("all");
+
+  // All apps — saari categories mila ke rating se sort
+  const allApps = [...topRated, ...newGames, ...otherGames]
+    .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
 
   const tabs = [
+    { id: "all", label: "🏆 All", apps: allApps },
     { id: "new-games", label: "🆕 New", apps: newGames },
-    { id: "top-rated", label: "⭐ Top Rated", apps: topRated },
     { id: "other-games", label: "🎮 Other", apps: otherGames },
   ];
 
   const fullLabels: Record<string, string> = {
+    "all": "🏆 All Apps",
     "new-games": "🆕 New Games",
-    "top-rated": "⭐ Top Rated",
     "other-games": "🎮 Other Games",
   };
 
@@ -120,7 +124,7 @@ export default function TabSection({ topRated, newGames, otherGames }: Props) {
 
       {/* Heading */}
       <h2 style={{ fontSize: 15, fontWeight: 700, color: "#1a1a1a", margin: "0 0 12px" }}>
-        {fullLabels[activeTab]} Apps
+        {fullLabels[activeTab]}
       </h2>
 
       {/* List */}
