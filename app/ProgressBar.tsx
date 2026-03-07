@@ -28,22 +28,20 @@ export default function ProgressBar() {
   }, [pathname, searchParams]);
 
   return (
-    <>
-      <div
-        id="top-progress-bar"
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          height: "3px",
-          width: "0%",
-          background: "linear-gradient(to right, #00e676, #69f0ae)",
-          zIndex: 9999,
-          opacity: 0,
-          boxShadow: "0 0 8px #00e676",
-          borderRadius: "0 2px 2px 0",
-        }}
-      />
-    </>
+    <div
+      id="top-progress-bar"
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        height: "3px",
+        width: "0%",
+        background: "linear-gradient(to right, #ff1744, #ff6b6b)",
+        zIndex: 9999,
+        opacity: 0,
+        boxShadow: "0 0 8px #ff1744",
+        borderRadius: "0 2px 2px 0",
+      }}
+    />
   );
 }
