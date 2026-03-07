@@ -1,13 +1,18 @@
-"use client";
-import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
+import type { Metadata } from "next";
+import ProgressBarProvider from "./ProgressBarProvider";
 
-export default function ProgressBarProvider() {
+export const metadata: Metadata = {
+  title: "NovaGames – Download Best Rummy & Slots Apps",
+  description: "Download the best Nova Rummy, Slots and Casino apps.",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <ProgressBar
-      height="3px"
-      color="#00e676"
-      options={{ showSpinner: false }}
-      shallowRouting
-    />
+    <html lang="en">
+      <body style={{ margin: 0, padding: 0 }}>
+        <ProgressBarProvider />
+        {children}
+      </body>
+    </html>
   );
 }
