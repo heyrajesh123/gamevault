@@ -1,10 +1,11 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { App } from "./page";
 
 function AppCard({ app, rank }: { app: App; rank: number }) {
   return (
-    <a href={"/" + app.slug} style={{ textDecoration: "none", display: "block" }}>
+    <Link href={"/" + app.slug} style={{ textDecoration: "none", display: "block" }}>
       <div style={{
         border: "1px solid #ddd",
         borderRadius: 12,
@@ -16,8 +17,8 @@ function AppCard({ app, rank }: { app: App; rank: number }) {
         <div style={{
           display: "flex",
           alignItems: "center",
-          gap: 2,
-          padding: "5px 5px",
+          gap: 10,
+          padding: "10px 10px",
         }}>
           {/* Rank */}
           <span style={{ color: "#aaa", fontWeight: 600, fontSize: 13, width: 20, flexShrink: 0, textAlign: "center" }}>
@@ -48,7 +49,7 @@ function AppCard({ app, rank }: { app: App; rank: number }) {
             </div>
           </div>
 
-          {/* Download Button — green, icon + text side by side */}
+          {/* Download Button */}
           <div style={{
             flexShrink: 0,
             background: "linear-gradient(180deg, #2e9e4f 0%, #1a7a35 100%)",
@@ -72,7 +73,7 @@ function AppCard({ app, rank }: { app: App; rank: number }) {
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }
 
