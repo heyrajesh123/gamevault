@@ -6,52 +6,56 @@ function AppCard({ app, rank }: { app: App; rank: number }) {
   return (
     <a href={"/" + app.slug} style={{ textDecoration: "none", display: "block" }}>
       <div style={{
-        display: "flex", alignItems: "center", gap: 12,
-        background: "#fff", padding: "14px 12px",
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
+        padding: "12px 14px",
         borderBottom: "1px solid #f0f0f0",
+        background: "#fff",
       }}>
         {/* Rank */}
-        <div style={{ color: "#999", fontWeight: 600, fontSize: 13, minWidth: 22, textAlign: "center", flexShrink: 0 }}>
+        <span style={{ color: "#aaa", fontWeight: 600, fontSize: 13, width: 20, flexShrink: 0, textAlign: "center" }}>
           {rank}.
-        </div>
+        </span>
 
-        {/* Logo - big square */}
+        {/* Logo */}
         <div style={{
-          width: 80, height: 80, borderRadius: 14, flexShrink: 0, overflow: "hidden",
-          background: "#f5f5f5",
+          width: 64, height: 64, borderRadius: 12,
+          flexShrink: 0, overflow: "hidden", background: "#f5f5f5",
         }}>
           {app.logoUrl
             ? <img src={app.logoUrl} alt={app.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-            : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 36 }}>🎮</div>
+            : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28 }}>🎮</div>
           }
         </div>
 
-        {/* Info */}
+        {/* Text Info */}
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{
-            fontWeight: 800, fontSize: 16, color: "#111",
-            marginBottom: 6, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
-          }}>
+          <div style={{ fontWeight: 800, fontSize: 15, color: "#111", marginBottom: 5, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
             {app.name}
           </div>
-          <div style={{ fontSize: 13, fontWeight: 600, color: "#e65100", marginBottom: 4 }}>
-            🎁 Sign Up Bonus ₹{app.bonus}
+          <div style={{ fontSize: 12, fontWeight: 600, color: "#d84315", marginBottom: 3, whiteSpace: "nowrap" }}>
+            🎁 Bonus: ₹{app.bonus}
           </div>
-          <div style={{ fontSize: 13, fontWeight: 600, color: "#1565c0" }}>
-            🏦 Min. Withdraw ₹{app.minWithdraw}
+          <div style={{ fontSize: 12, fontWeight: 600, color: "#1565c0", whiteSpace: "nowrap" }}>
+            🏦 Min. WD: ₹{app.minWithdraw}
           </div>
         </div>
 
-        {/* Download Button - blue, big */}
+        {/* Download Button */}
         <div style={{
-          background: "linear-gradient(180deg, #4a90e2, #2563c7)",
-          color: "#fff", padding: "12px 14px", borderRadius: 12,
-          fontSize: 13, fontWeight: 700,
-          flexShrink: 0, textAlign: "center",
-          boxShadow: "0 3px 8px rgba(37,99,199,0.35)",
-          minWidth: 90,
+          flexShrink: 0,
+          background: "linear-gradient(180deg, #4a90e2 0%, #1a5fcf 100%)",
+          color: "#fff",
+          borderRadius: 10,
+          padding: "8px 12px",
+          textAlign: "center",
+          fontSize: 12,
+          fontWeight: 700,
+          boxShadow: "0 3px 8px rgba(26,95,207,0.4)",
+          lineHeight: 1.4,
         }}>
-          <div style={{ fontSize: 18, marginBottom: 2 }}>⬇</div>
+          <div style={{ fontSize: 16 }}>⬇</div>
           Download
         </div>
       </div>
@@ -84,40 +88,33 @@ export default function TabSection({ topRated, newGames, otherGames }: Props) {
 
   return (
     <div>
-      {/* Tab Buttons */}
+      {/* Tabs */}
       <div style={{
         display: "flex", background: "#fff", borderRadius: 12,
-        padding: 4, marginBottom: 12,
+        padding: 4, marginBottom: 14,
         boxShadow: "0 1px 6px rgba(0,0,0,0.08)", gap: 3,
       }}>
         {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            style={{
-              flex: 1, padding: "10px 4px", borderRadius: 9, border: "none",
-              background: activeTab === tab.id
-                ? "linear-gradient(135deg, #00632b, #007860)"
-                : "transparent",
-              color: activeTab === tab.id ? "#fff" : "#666",
-              fontWeight: 700, fontSize: 13, cursor: "pointer",
-              transition: "all 0.2s",
-            }}
-          >{tab.label}</button>
+          <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{
+            flex: 1, padding: "10px 2px", borderRadius: 9, border: "none",
+            background: activeTab === tab.id ? "linear-gradient(135deg,#00632b,#007860)" : "transparent",
+            color: activeTab === tab.id ? "#fff" : "#555",
+            fontWeight: 700, fontSize: 12, cursor: "pointer",
+          }}>{tab.label}</button>
         ))}
       </div>
 
-      {/* Section Heading */}
-      <h2 style={{ fontSize: 15, fontWeight: 700, color: "#1a1a1a", margin: "0 0 8px", paddingLeft: 4 }}>
+      {/* Heading */}
+      <h2 style={{ fontSize: 15, fontWeight: 700, color: "#1a1a1a", margin: "0 0 10px" }}>
         {fullLabels[activeTab]} Apps
       </h2>
 
-      {/* App List - clean card with border */}
+      {/* List */}
       <div style={{ background: "#fff", borderRadius: 14, overflow: "hidden", boxShadow: "0 2px 10px rgba(0,0,0,0.08)" }}>
         {active.apps.length === 0 ? (
           <div style={{ textAlign: "center", padding: "48px 16px", color: "#aaa" }}>
-            <div style={{ fontSize: 40, marginBottom: 10 }}>🎮</div>
-            <p style={{ margin: 0, fontSize: 13 }}>No apps in this category yet</p>
+            <div style={{ fontSize: 38, marginBottom: 10 }}>🎮</div>
+            <p style={{ margin: 0, fontSize: 13 }}>No apps yet</p>
           </div>
         ) : (
           active.apps.map((app, i) => <AppCard key={app._id} app={app} rank={i + 1} />)
