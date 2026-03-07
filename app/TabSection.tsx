@@ -18,7 +18,7 @@ function AppCard({ app, rank }: { app: App; rank: number }) {
           display: "flex",
           alignItems: "center",
           gap: 1,
-          padding: "10px 2px",
+          padding: "2px 2px",
         }}>
           {/* Rank */}
           <span style={{ color: "#aaa", fontWeight: 600, fontSize: 13, width: 20, flexShrink: 0, textAlign: "center" }}>
@@ -55,10 +55,10 @@ function AppCard({ app, rank }: { app: App; rank: number }) {
             background: "linear-gradient(180deg, #2e9e4f 0%, #1a7a35 100%)",
             color: "#fff",
             borderRadius: 10,
-            padding: "10px 14px",
+            padding: "10px 5px",
             display: "flex",
             alignItems: "center",
-            gap: 6,
+            gap: 2,
             fontSize: 13,
             fontWeight: 700,
             boxShadow: "0 3px 8px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2)",
