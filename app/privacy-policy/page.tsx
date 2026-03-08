@@ -1,9 +1,11 @@
 import { Metadata } from "next";
+import Link from "next/link";
 import Header from "../Header";
+import Footer from "../Footer";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy – NovaGames",
-  description: "Read the NovaGames Privacy Policy to understand how we collect, use, and protect your information.",
+  title: "Privacy Policy – YonoGames",
+  description: "Read the YonoGames Privacy Policy to understand how we collect, use, and protect your information.",
 };
 
 export default function PrivacyPolicy() {
@@ -48,19 +50,11 @@ export default function PrivacyPolicy() {
           <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated date.</p>
 
           <h2 style={{ color: "#00632b", fontSize: 18 }}>8. Contact</h2>
-          <p>If you have any questions about this Privacy Policy, please <a href="/contact-us" style={{ color: "#00632b", fontWeight: 600 }}>contact us</a>.</p>
+          <p>If you have any questions about this Privacy Policy, please <Link href="/contact-us" style={{ color: "#00632b", fontWeight: 600 }}>contact us</Link>.</p>
         </div>
       </main>
 
-      <footer style={{ background: "#1a1a1a", color: "#aaa", padding: "24px 16px", textAlign: "center", fontSize: 13 }}>
-        <p style={{ margin: "0 0 8px", color: "#fff", fontWeight: 700 }}>🎮 NovaGames</p>
-        <p style={{ margin: "0 0 8px" }}>© 2025 NovaGames. All rights reserved.</p>
-        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "0 16px" }}>
-          <a href="/about-us" style={{ color: "#aaa", textDecoration: "none" }}>About Us</a>
-          <a href="/disclaimer" style={{ color: "#aaa", textDecoration: "none" }}>Disclaimer</a>
-          <a href="/terms-and-conditions" style={{ color: "#aaa", textDecoration: "none" }}>Terms & Conditions</a>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
