@@ -31,7 +31,7 @@ function AppCard({ app, rank }: { app: App; rank: number }) {
             flexShrink: 0, overflow: "hidden", background: "#f5f5f5",
           }}>
             {app.logoUrl
-              ? <img src={app.logoUrl} alt={app.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              ? <img src={app.logoUrl + "?w=128&h=128&fit=crop&auto=format"} alt={app.name} width={64} height={64} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28 }}>🎮</div>
             }
           </div>
