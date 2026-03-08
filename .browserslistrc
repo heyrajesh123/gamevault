@@ -1,0 +1,5 @@
+[production]
+chrome >= 80        → Chrome browser (Desktop + Android)
+firefox >= 80       → Firefox (Desktop + Android)
+safari >= 14        → Safari (iPhone + iPad + Mac)
+edge >= 80          → Edge (Desktop + Android)
