@@ -1,9 +1,11 @@
 import { Metadata } from "next";
+import Link from "next/link";
 import Header from "../Header";
+import Footer from "../Footer";
 
 export const metadata: Metadata = {
-  title: "Terms and Conditions – NovaGames",
-  description: "Read the NovaGames Terms and Conditions before using our website.",
+  title: "Terms and Conditions – YonoGames",
+  description: "Read the YonoGames Terms and Conditions before using our website.",
 };
 
 export default function TermsAndConditions() {
@@ -13,7 +15,7 @@ export default function TermsAndConditions() {
 
       <div style={{ background: "linear-gradient(135deg, #00632b, #012459)", padding: "32px 16px", textAlign: "center" }}>
         <h1 style={{ color: "#fff", fontSize: 28, fontWeight: 900, margin: "0 0 8px" }}>Terms & Conditions</h1>
-        <p style={{ color: "#ffffff99", fontSize: 14, margin: 0 }}>Please read before using NovaGames</p>
+        <p style={{ color: "#ffffff99", fontSize: 14, margin: 0 }}>Please read before using YonoGames</p>
       </div>
 
       <main style={{ maxWidth: 700, margin: "0 auto", padding: "24px 16px 60px" }}>
@@ -22,22 +24,22 @@ export default function TermsAndConditions() {
           <p style={{ color: "#666", fontSize: 13, marginTop: 0 }}>Last updated: January 2025</p>
 
           <h2 style={{ color: "#00632b", fontSize: 18 }}>1. Acceptance of Terms</h2>
-          <p>By accessing or using NovaGames, you agree to be bound by these Terms and Conditions. If you do not agree, please do not use our website.</p>
+          <p>By accessing or using YonoGames, you agree to be bound by these Terms and Conditions. If you do not agree, please do not use our website.</p>
 
           <h2 style={{ color: "#00632b", fontSize: 18 }}>2. Use of Website</h2>
-          <p>NovaGames is an informational platform. You agree to use this website only for lawful purposes and in a manner that does not infringe on the rights of others.</p>
+          <p>YonoGames is an informational platform. You agree to use this website only for lawful purposes and in a manner that does not infringe on the rights of others.</p>
 
           <h2 style={{ color: "#00632b", fontSize: 18 }}>3. Age Requirement</h2>
-          <p>You must be at least <strong>18 years of age</strong> to use this website. By using NovaGames, you confirm that you meet this age requirement.</p>
+          <p>You must be at least <strong>18 years of age</strong> to use this website. By using YonoGames, you confirm that you meet this age requirement.</p>
 
           <h2 style={{ color: "#00632b", fontSize: 18 }}>4. Intellectual Property</h2>
-          <p>All content on NovaGames including text, graphics, logos, and images is the property of NovaGames or its content suppliers. Reproduction without permission is prohibited.</p>
+          <p>All content on YonoGames including text, graphics, logos, and images is the property of YonoGames or its content suppliers. Reproduction without permission is prohibited.</p>
 
           <h2 style={{ color: "#00632b", fontSize: 18 }}>5. Third-Party Apps</h2>
-          <p>NovaGames provides links to third-party applications for informational purposes. We do not endorse or take responsibility for any third-party apps, their content, or their terms of service.</p>
+          <p>YonoGames provides links to third-party applications for informational purposes. We do not endorse or take responsibility for any third-party apps, their content, or their terms of service.</p>
 
           <h2 style={{ color: "#00632b", fontSize: 18 }}>6. Limitation of Liability</h2>
-          <p>NovaGames shall not be liable for any direct, indirect, incidental, or consequential damages arising from the use of our website or any apps listed herein. Use at your own risk.</p>
+          <p>YonoGames shall not be liable for any direct, indirect, incidental, or consequential damages arising from the use of our website or any apps listed herein. Use at your own risk.</p>
 
           <h2 style={{ color: "#00632b", fontSize: 18 }}>7. Responsible Gaming</h2>
           <p>We strongly encourage responsible gaming. Real-money gaming involves financial risk. Never bet more than you can afford to lose. If you have a gaming addiction, please seek help immediately.</p>
@@ -49,23 +51,15 @@ export default function TermsAndConditions() {
           <p>These Terms are governed by the laws of India. Any disputes shall be subject to the jurisdiction of Indian courts.</p>
 
           <h2 style={{ color: "#00632b", fontSize: 18 }}>10. Contact</h2>
-          <p>For any questions regarding these terms, please <a href="/contact-us" style={{ color: "#00632b", fontWeight: 600 }}>contact us</a>.</p>
+          <p>For any questions regarding these terms, please <Link href="/contact-us" style={{ color: "#00632b", fontWeight: 600 }}>contact us</Link>.</p>
 
           <div style={{ background: "#e8f5e9", borderRadius: 12, padding: 16, marginTop: 24 }}>
-            <p style={{ margin: 0, fontWeight: 600, color: "#2e7d32" }}>✅ By using NovaGames, you agree to all the terms stated above.</p>
+            <p style={{ margin: 0, fontWeight: 600, color: "#2e7d32" }}>✅ By using YonoGames, you agree to all the terms stated above.</p>
           </div>
         </div>
       </main>
 
-      <footer style={{ background: "#1a1a1a", color: "#aaa", padding: "24px 16px", textAlign: "center", fontSize: 13 }}>
-        <p style={{ margin: "0 0 8px", color: "#fff", fontWeight: 700 }}>🎮 NovaGames</p>
-        <p style={{ margin: "0 0 8px" }}>© 2025 NovaGames. All rights reserved.</p>
-        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "0 16px" }}>
-          <a href="/about-us" style={{ color: "#aaa", textDecoration: "none" }}>About Us</a>
-          <a href="/disclaimer" style={{ color: "#aaa", textDecoration: "none" }}>Disclaimer</a>
-          <a href="/privacy-policy" style={{ color: "#aaa", textDecoration: "none" }}>Privacy Policy</a>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
