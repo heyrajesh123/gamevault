@@ -115,7 +115,7 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
           <div style={{ display: "flex", gap: 16, alignItems: "flex-start", marginBottom: 20 }}>
             <div style={{ width: 90, height: 90, borderRadius: 20, overflow: "hidden", flexShrink: 0, border: "2px solid #f0f0f0" }}>
               {app.logoUrl
-                ? <img src={app.logoUrl} alt={app.name + " Logo"} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                ? <img src={app.logoUrl + "?w=180&h=180&fit=crop&auto=format"} alt={app.name + " Logo"} width={90} height={90} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 : <div style={{ width: "100%", height: "100%", background: "linear-gradient(135deg,#00632b,#012459)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 40 }}>🎮</div>
               }
             </div>
@@ -185,7 +185,7 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
             <h2 style={{ margin: "0 0 14px", fontSize: 16, fontWeight: 700 }}>Screenshots</h2>
             <div style={{ display: "flex", gap: 10, overflowX: "auto", scrollbarWidth: "none" }}>
               {app.screenshots.map((ss, i) => (
-                <img key={i} src={ss.imageUrl} alt={ss.altText || app.name} style={{ height: 180, borderRadius: 10, flexShrink: 0, objectFit: "cover", border: "1px solid #f0f0f0" }} />
+                <img key={i} src={ss.imageUrl + "?w=400&h=320&fit=crop&auto=format"} alt={ss.altText || app.name} width={250} height={180} style={{ height: 180, borderRadius: 10, flexShrink: 0, objectFit: "cover", border: "1px solid #f0f0f0" }} />
               ))}
             </div>
           </div>
@@ -205,7 +205,7 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
                 }}>
                   <div style={{ width: 52, height: 52, borderRadius: 12, overflow: "hidden", flexShrink: 0, background: "#eee" }}>
                     {ra.logoUrl
-                      ? <img src={ra.logoUrl} alt={ra.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      ? <img src={ra.logoUrl + "?w=104&h=104&fit=crop&auto=format"} alt={ra.name} width={52} height={52} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                       : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24 }}>🎮</div>
                     }
                   </div>
