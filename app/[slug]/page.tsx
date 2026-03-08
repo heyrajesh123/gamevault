@@ -185,7 +185,7 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
             <h2 style={{ margin: "0 0 14px", fontSize: 16, fontWeight: 700 }}>Screenshots</h2>
             <div style={{ display: "flex", gap: 10, overflowX: "auto", scrollbarWidth: "none" }}>
               {app.screenshots.map((ss, i) => (
-                <img key={i} src={ss.imageUrl + "?w=400&h=320&fit=crop&auto=format"} alt={ss.altText || app.name} width={250} height={180} style={{ height: 180, borderRadius: 10, flexShrink: 0, objectFit: "cover", border: "1px solid #f0f0f0" }} />
+                <img key={i} src={ss.imageUrl + "?w=200&auto=format"} alt={ss.altText || app.name} width={100} height={220} style={{ height: 220, width: "auto", borderRadius: 10, flexShrink: 0, objectFit: "cover", border: "1px solid #f0f0f0" }} />
               ))}
             </div>
           </div>
