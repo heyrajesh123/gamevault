@@ -8,7 +8,9 @@ export async function generateStaticParams() {
 }
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import Header from "../Header";
+import Footer from "../Footer";
 
 const PROJECT_ID = "eq6o0luu";
 const DATASET = "production";
@@ -102,20 +104,6 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
     "aggregateRating": { "@type": "AggregateRating", "ratingValue": app.rating, "bestRating": 5, "worstRating": 1, "ratingCount": app.reviewCount || 1 },
   };
 
-  const footer = (
-    <footer style={{ background: "#1a1a1a", color: "#aaa", padding: "24px 16px", textAlign: "center", fontSize: 13 }}>
-      <p style={{ margin: "0 0 8px", color: "#fff", fontWeight: 700 }}>🎮 YonoGames</p>
-      <p style={{ margin: "0 0 8px" }}>© 2025 YonoGames. All rights reserved.</p>
-      <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "0 16px" }}>
-        <a href="/about-us" style={{ color: "#aaa", textDecoration: "none" }}>About Us</a>
-        <a href="/contact-us" style={{ color: "#aaa", textDecoration: "none" }}>Contact Us</a>
-        <a href="/disclaimer" style={{ color: "#aaa", textDecoration: "none" }}>Disclaimer</a>
-        <a href="/privacy-policy" style={{ color: "#aaa", textDecoration: "none" }}>Privacy Policy</a>
-        <a href="/terms-and-conditions" style={{ color: "#aaa", textDecoration: "none" }}>Terms & Conditions</a>
-      </div>
-    </footer>
-  );
-
   return (
     <div style={{ minHeight: "100vh", background: "#f5f7fa", fontFamily: "'Segoe UI', system-ui, sans-serif" }}>
       <Header />
@@ -169,7 +157,14 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
           )}
         </div>
 
-        {/* App Details Table */}
+        {/* 1. App Information — App Details se UPAR */}
+        {app.appInformation && (
+          <div style={{ background: "#fff", borderRadius: 16, padding: 20, marginBottom: 16, boxShadow: "0 2px 12px rgba(0,0,0,0.08)" }}>
+            <div style={{ color: "#444", fontSize: 14, lineHeight: 1.7 }} dangerouslySetInnerHTML={{ __html: app.appInformation }} />
+          </div>
+        )}
+
+        {/* 2. App Details Table */}
         <div style={{ background: "#fff", borderRadius: 16, padding: 20, marginBottom: 16, boxShadow: "0 2px 12px rgba(0,0,0,0.08)" }}>
           <h2 style={{ margin: "0 0 14px", fontSize: 16, fontWeight: 700 }}>App Details</h2>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -184,6 +179,38 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
           </table>
         </div>
 
+        {/* 3. Other Related Apps — App Details ke NEECHE */}
+        {relatedApps.length > 0 && (
+          <div style={{ background: "#fff", borderRadius: 16, padding: 20, marginBottom: 16, boxShadow: "0 2px 12px rgba(0,0,0,0.08)" }}>
+            <h2 style={{ margin: "0 0 16px", fontSize: 16, fontWeight: 700 }}>Other Related Apps</h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {relatedApps.map((ra) => (
+                <Link key={ra._id} href={"/" + ra.slug} style={{
+                  display: "flex", alignItems: "center", gap: 12,
+                  textDecoration: "none", color: "inherit",
+                  background: "#f9f9f9", borderRadius: 14, padding: "12px 14px",
+                  border: "1px solid #f0f0f0",
+                }}>
+                  <div style={{ width: 52, height: 52, borderRadius: 12, overflow: "hidden", flexShrink: 0, background: "#eee" }}>
+                    {ra.logoUrl
+                      ? <img src={ra.logoUrl} alt={ra.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24 }}>🎮</div>
+                    }
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontWeight: 700, fontSize: 14, color: "#1a1a1a", marginBottom: 3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{ra.name}</div>
+                    <div style={{ fontSize: 12, color: "#2e7d32", fontWeight: 600, marginBottom: 2 }}>Sign Up Bonus ₹{ra.bonus}</div>
+                    <div style={{ fontSize: 12, color: "#555" }}>Min. Withdraw ₹{ra.minWithdraw}/-</div>
+                  </div>
+                  <div style={{ background: "linear-gradient(135deg, #00632b, #007860)", color: "#fff", padding: "7px 12px", borderRadius: 10, fontSize: 12, fontWeight: 700, flexShrink: 0 }}>
+                    ⬇ Download
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Screenshots */}
         {app.screenshots?.length > 0 && (
           <div style={{ background: "#fff", borderRadius: 16, padding: 20, marginBottom: 16, boxShadow: "0 2px 12px rgba(0,0,0,0.08)" }}>
@@ -193,14 +220,6 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
                 <img key={i} src={ss.imageUrl} alt={ss.altText || app.name} style={{ height: 180, borderRadius: 10, flexShrink: 0, objectFit: "cover", border: "1px solid #f0f0f0" }} />
               ))}
             </div>
-          </div>
-        )}
-
-        {/* App Information */}
-        {app.appInformation && (
-          <div style={{ background: "#fff", borderRadius: 16, padding: 20, marginBottom: 16, boxShadow: "0 2px 12px rgba(0,0,0,0.08)" }}>
-            <h2 style={{ margin: "0 0 12px", fontSize: 16, fontWeight: 700 }}>App Information</h2>
-            <div style={{ color: "#444", fontSize: 14, lineHeight: 1.7 }} dangerouslySetInnerHTML={{ __html: app.appInformation }} />
           </div>
         )}
 
@@ -222,40 +241,9 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
           ))}
         </div>
 
-        {/* Other Related Apps */}
-        {relatedApps.length > 0 && (
-          <div style={{ background: "#fff", borderRadius: 16, padding: 20, boxShadow: "0 2px 12px rgba(0,0,0,0.08)" }}>
-            <h2 style={{ margin: "0 0 16px", fontSize: 16, fontWeight: 700 }}>Other Related Apps</h2>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {relatedApps.map((ra) => (
-                <a key={ra._id} href={"/" + ra.slug} style={{
-                  display: "flex", alignItems: "center", gap: 12,
-                  textDecoration: "none", color: "inherit",
-                  background: "#f9f9f9", borderRadius: 14, padding: "12px 14px",
-                  border: "1px solid #f0f0f0",
-                }}>
-                  <div style={{ width: 52, height: 52, borderRadius: 12, overflow: "hidden", flexShrink: 0, background: "#eee" }}>
-                    {ra.logoUrl
-                      ? <img src={ra.logoUrl} alt={ra.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                      : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24 }}>🎮</div>
-                    }
-                  </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontWeight: 700, fontSize: 14, color: "#1a1a1a", marginBottom: 3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{ra.name}</div>
-                    <div style={{ fontSize: 12, color: "#2e7d32", fontWeight: 600, marginBottom: 2 }}>Sign Up Bonus ₹{ra.bonus}</div>
-                    <div style={{ fontSize: 12, color: "#555" }}>Min. Withdraw ₹{ra.minWithdraw}/-</div>
-                  </div>
-                  <div style={{ background: "linear-gradient(135deg, #00632b, #007860)", color: "#fff", padding: "7px 12px", borderRadius: 10, fontSize: 12, fontWeight: 700, flexShrink: 0 }}>
-                    ⬇ Download
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
       </main>
 
-      {footer}
+      <Footer />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
     </div>
   );
