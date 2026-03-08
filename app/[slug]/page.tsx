@@ -179,7 +179,19 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
           </table>
         </div>
 
-        {/* 3. Other Related Apps — App Details ke NEECHE */}
+        {/* Screenshots — Other Related Apps se UPAR */}
+        {app.screenshots?.length > 0 && (
+          <div style={{ background: "#fff", borderRadius: 16, padding: 20, marginBottom: 16, boxShadow: "0 2px 12px rgba(0,0,0,0.08)" }}>
+            <h2 style={{ margin: "0 0 14px", fontSize: 16, fontWeight: 700 }}>Screenshots</h2>
+            <div style={{ display: "flex", gap: 10, overflowX: "auto", scrollbarWidth: "none" }}>
+              {app.screenshots.map((ss, i) => (
+                <img key={i} src={ss.imageUrl} alt={ss.altText || app.name} style={{ height: 180, borderRadius: 10, flexShrink: 0, objectFit: "cover", border: "1px solid #f0f0f0" }} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Other Related Apps — Screenshots ke NEECHE */}
         {relatedApps.length > 0 && (
           <div style={{ background: "#fff", borderRadius: 16, padding: 20, marginBottom: 16, boxShadow: "0 2px 12px rgba(0,0,0,0.08)" }}>
             <h2 style={{ margin: "0 0 16px", fontSize: 16, fontWeight: 700 }}>Other Related Apps</h2>
@@ -206,18 +218,6 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
                     ⬇ Download
                   </div>
                 </Link>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Screenshots */}
-        {app.screenshots?.length > 0 && (
-          <div style={{ background: "#fff", borderRadius: 16, padding: 20, marginBottom: 16, boxShadow: "0 2px 12px rgba(0,0,0,0.08)" }}>
-            <h2 style={{ margin: "0 0 14px", fontSize: 16, fontWeight: 700 }}>Screenshots</h2>
-            <div style={{ display: "flex", gap: 10, overflowX: "auto", scrollbarWidth: "none" }}>
-              {app.screenshots.map((ss, i) => (
-                <img key={i} src={ss.imageUrl} alt={ss.altText || app.name} style={{ height: 180, borderRadius: 10, flexShrink: 0, objectFit: "cover", border: "1px solid #f0f0f0" }} />
               ))}
             </div>
           </div>
