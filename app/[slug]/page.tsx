@@ -148,13 +148,13 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
             boxShadow: "0 6px 20px rgba(0,99,43,0.35)",
           }}>⬇ Download {app.name} APK</a>
 
-          {app.telegramLink && (
+          <div style={{ textAlign: "center", marginTop: 10 }}>
             <a href="/join-telegram" target="_blank" rel="noopener noreferrer" style={{
               display: "inline-flex", alignItems: "center", gap: 6,
               background: "#0088cc", color: "#fff", textDecoration: "none",
               padding: "8px 16px", borderRadius: 10, fontWeight: 600, fontSize: 13,
             }}>✈ Join Telegram</a>
-          )}
+          </div>
         </div>
 
         {/* 1. App Information — App Details se UPAR */}
