@@ -71,8 +71,8 @@ async function getRelatedApps(currentSlug: string): Promise<RelatedApp[]> {
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const app = await getApp(params.slug);
-  if (!app) return { title: "App Not Found – YonoGames" };
-  const title = app.metaTitle || `${app.name} APK Download – ₹${app.bonus} Bonus | YonoGames`;
+  if (!app) return { title: "App Not Found – NovaGames" };
+  const title = app.metaTitle || `${app.name} APK Download – ₹${app.bonus} Bonus | NovaGames`;
   const description = app.metaDescription || `Download ${app.name} APK and get ₹${app.bonus} sign-up bonus. Minimum withdrawal ₹${app.minWithdraw}.`;
   return {
     title, description,
@@ -115,7 +115,7 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
           <div style={{ display: "flex", gap: 16, alignItems: "flex-start", marginBottom: 20 }}>
             <div style={{ width: 90, height: 90, borderRadius: 20, overflow: "hidden", flexShrink: 0, border: "2px solid #f0f0f0" }}>
               {app.logoUrl
-                ? <img src={app.logoUrl + "?w=180&h=180&fit=crop&auto=format"} alt={app.name + " Logo"} width={90} height={90} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                ? <img src={app.logoUrl + "?w=180&h=180&fit=crop&auto=format"} alt={app.name + " Logo"} width={90} height={90} fetchPriority="high" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 : <div style={{ width: "100%", height: "100%", background: "linear-gradient(135deg,#00632b,#012459)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 40 }}>🎮</div>
               }
             </div>
@@ -149,11 +149,11 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
           }}>⬇ Download {app.name} APK</a>
 
           {app.telegramLink && (
-            <a href={app.telegramLink} target="_blank" rel="noopener noreferrer" style={{
-              display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+            <a href="/join-telegram" target="_blank" rel="noopener noreferrer" style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
               background: "#0088cc", color: "#fff", textDecoration: "none",
-              padding: "12px", borderRadius: 12, fontWeight: 600, fontSize: 14,
-            }}>✈ Join our Telegram Channel</a>
+              padding: "8px 16px", borderRadius: 10, fontWeight: 600, fontSize: 13,
+            }}>✈ Join Telegram</a>
           )}
         </div>
 
@@ -185,7 +185,7 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
             <h2 style={{ margin: "0 0 14px", fontSize: 16, fontWeight: 700 }}>Screenshots</h2>
             <div style={{ display: "flex", gap: 10, overflowX: "auto", scrollbarWidth: "none" }}>
               {app.screenshots.map((ss, i) => (
-                <img key={i} src={ss.imageUrl + "?w=200&auto=format"} alt={ss.altText || app.name} width={100} height={220} style={{ height: 220, width: "auto", borderRadius: 10, flexShrink: 0, objectFit: "cover", border: "1px solid #f0f0f0" }} />
+                <img key={i} src={ss.imageUrl + "?w=200&auto=format"} alt={ss.altText || app.name} width={100} height={220} fetchPriority={i === 0 ? "high" : "low"} style={{ height: 220, width: "auto", borderRadius: 10, flexShrink: 0, objectFit: "cover", border: "1px solid #f0f0f0" }} />
               ))}
             </div>
           </div>
