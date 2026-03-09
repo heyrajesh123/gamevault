@@ -153,7 +153,7 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
               display: "inline-flex", alignItems: "center", gap: 6,
               background: "#0088cc", color: "#fff", textDecoration: "none",
               padding: "8px 16px", borderRadius: 10, fontWeight: 600, fontSize: 13,
-            }}>✈ Join Telegram</a>
+            }}>🔗 Join Our Telegram Channel</a>
           </div>
         </div>
 
