@@ -32,11 +32,12 @@ export default function Header() {
         display: "flex", alignItems: "center", justifyContent: "space-between", height: 60,
       }}>
         {/* Logo */}
-        <Link href="/" style={{ textDecoration: "none", flexShrink: 0 }}>
-          <span style={{ fontSize: 20, fontWeight: 800, color: "#fff", fontFamily: "cursive" }}>
-            🎮 NovaGames
-          </span>
-        </Link>
+<Link href="/" style={{ textDecoration: "none", flexShrink: 0, display: "flex", alignItems: "center", gap: 8 }}>
+  <img src="/app-store.png" alt="Logo" width={36} height={36} style={{ borderRadius: 8, objectFit: "cover" }} />
+  <span style={{ fontSize: 20, fontWeight: 800, color: "#fff", fontFamily: "cursive" }}>
+    NovaGames
+  </span>
+</Link>
 
         {/* Desktop Nav */}
         {!isMobile && (
