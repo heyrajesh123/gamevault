@@ -127,7 +127,7 @@ export default async function AppPage({ params }: { params: { slug: string } }) 
                 </span>
                 {app.size && (
                   <span style={{ background: "#fff3e0", color: "#e65100", padding: "5px 12px", borderRadius: 20, fontSize: 13, fontWeight: 600 }}>
-                    📦 {app.size} MB
+                    📂 {app.size} MB
                   </span>
                 )}
               </div>
