@@ -87,8 +87,8 @@ export default function TabSection({ topRated, newGames, otherGames }: Props) {
   const [activeTab, setActiveTab] = useState("all");
 
   // All apps — saari categories mila ke rating se sort
-  const allApps = [...topRated, ...newGames, ...otherGames]
-    .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
+const allApps = [...topRated, ...newGames, ...otherGames]
+    .sort((a, b) => (b.reviewCount ?? 0) - (a.reviewCount ?? 0));
 
   const tabs = [
     { id: "all", label: "🏆 All", apps: allApps },
